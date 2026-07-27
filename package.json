@@ -1,5 +1,6 @@
 {
   "name": "SuperAppShowcase",
+  "private": true,
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/Xung-Chan/Super-App-Showcase.git",
@@ -18,8 +19,9 @@
     "format": "prettier --write \"**/*.{js,ts,tsx,json}\""
   },
   "devDependencies": {
+    "prettier": "^3.0.0",
     "turbo": "latest",
-    "prettier": "^3.0.0"
+    "webpack": "5.90"
   },
   "packageManager": "yarn@1.22.22"
 }
