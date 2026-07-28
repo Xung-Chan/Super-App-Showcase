@@ -20,8 +20,7 @@
   },
   "devDependencies": {
     "prettier": "^3.0.0",
-    "turbo": "latest",
-    "webpack": "5.90"
+    "turbo": "latest"
   },
   "packageManager": "yarn@1.22.22"
 }
