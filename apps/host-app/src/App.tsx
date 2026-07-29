@@ -1,47 +1,42 @@
-import React from 'react';
-import { SafeAreaView, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { SuperButton } from '@superapp/shared-ui';
-import { appCatalog } from './catalog';
-import { RemoteApp } from './RemoteApp';
+import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import {
+  SafeAreaProvider,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+import ErrorBoundary from './components/ErrorBoundary';
+import React from 'react';
+import SplashScreen from './components/SplashScreen';
 
-// Màn hình Catalog (Trang chủ)
-function CatalogScreen({ navigation }: any) {
+
+// const MiniAppAScreen = React.lazy(() => import('mini_app_a/App'))
+
+function App() {
+  const isDarkMode = useColorScheme() === 'dark';
+
+
   return (
-    <SafeAreaView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ fontSize: 24, marginBottom: 20, fontWeight: 'bold' }}>
-        SuperApp Catalog
-      </Text>
+    <ErrorBoundary name={'Test'}>
+      <React.Suspense fallback={<SplashScreen />}>
 
-      {appCatalog.map((app) => (
-        <SuperButton
-          key={app.id}
-          title={`Mở ${app.name}`}
-          onPress={() => navigation.navigate('MiniAppContainer', { appId: app.id })}
-        />
-      ))}
-    </SafeAreaView>
+        <View style={styles.container}>
+          <SuperButton title={'Navigate to Mini App A'} onPress={function () { }}>
+          </SuperButton>
+
+        </View>
+      </React.Suspense>
+
+    </ErrorBoundary>
   );
 }
 
-const Stack = createNativeStackNavigator();
 
-// Router chính của Host App
-export default function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Catalog" component={CatalogScreen} options={{ title: 'Trang chủ' }} />
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: 50
+  },
+});
 
-        {/* Vỏ bọc dùng chung cho mọi Mini App */}
-        <Stack.Screen
-          name="MiniAppContainer"
-          component={RemoteApp}
-          options={({ route }: any) => ({ title: route.params.appId })}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
+export default App;

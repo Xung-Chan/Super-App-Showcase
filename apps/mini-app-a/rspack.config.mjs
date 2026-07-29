@@ -101,6 +101,8 @@ export default (env = {}) => {
           react: sharedSingleton,
           'react-native': sharedSingleton,
           'react-native-safe-area-context': sharedSingleton,
+          '@react-native/normalize-colors': sharedSingleton,
+          '@react-native/assets-registry': sharedSingleton,
           '@react-native/new-app-screen': sharedSingleton,
           '@superapp/shared-ui': sharedSingleton,
         },
