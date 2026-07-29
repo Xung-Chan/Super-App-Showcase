@@ -1,0 +1,10 @@
+{
+    "react": {
+        "name": "react",
+        "version": "19.2.3"
+    },
+    "react-native": {
+        "name": "react-native",
+        "version": "0.84.1"
+    }
+}

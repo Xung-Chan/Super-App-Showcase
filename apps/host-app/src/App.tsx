@@ -18,12 +18,14 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 type RootStackParamList = {
   Home: undefined;
-  MiniApp: undefined;
+  MiniAppA: undefined;
+  MiniAppB: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const FederatedMiniApp = React.lazy(() => import('mini_app_a/App'));
+const FederatedMiniAppA = React.lazy(() => import('mini_app_a/App'));
+const FederatedMiniAppB = React.lazy(() => import('mini_app_b/App'));
 
 function App() {
   return (
@@ -37,8 +39,14 @@ function App() {
           />
 
           <Stack.Screen
-            name="MiniApp"
-            component={MiniAppScreen}
+            name="MiniAppA"
+            component={MiniAppScreenA}
+            options={{ title: 'Mini App' }}
+          />
+
+          <Stack.Screen
+            name="MiniAppB"
+            component={MiniAppScreenB}
             options={{ title: 'Mini App' }}
           />
         </Stack.Navigator>
@@ -54,27 +62,41 @@ function HomeScreen({
 
   return (
     <>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-      />
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
 
       <View style={styles.container}>
         <Text style={styles.title}>Host App</Text>
 
         <Button
-          title="Go to Mini App"
-          onPress={() => navigation.navigate('MiniApp')}
+          title="Go to Mini App A"
+          onPress={() => navigation.navigate('MiniAppA')}
+        />
+        <Button
+          title="Go to Mini App B"
+          onPress={() => navigation.navigate('MiniAppB')}
         />
       </View>
     </>
   );
 }
 
-function MiniAppScreen() {
+function MiniAppScreenA({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, 'MiniAppA'>) {
   return (
     <ErrorBoundary fallback={<MiniAppErrorFallback />}>
       <React.Suspense fallback={<LoadingScreen />}>
-        <FederatedMiniApp />
+        <FederatedMiniAppA
+        />
+      </React.Suspense>
+    </ErrorBoundary>
+  );
+}
+function MiniAppScreenB() {
+  return (
+    <ErrorBoundary fallback={<MiniAppErrorFallback />}>
+      <React.Suspense fallback={<LoadingScreen />}>
+        <FederatedMiniAppB />
       </React.Suspense>
     </ErrorBoundary>
   );
@@ -95,8 +117,8 @@ function MiniAppErrorFallback() {
       <Text style={styles.errorTitle}>Mini app unavailable</Text>
 
       <Text style={styles.errorMessage}>
-        Make sure the mini app development server is running and that the
-        host can access its federation manifest.
+        Make sure the mini app development server is running and that the host
+        can access its federation manifest.
       </Text>
     </View>
   );

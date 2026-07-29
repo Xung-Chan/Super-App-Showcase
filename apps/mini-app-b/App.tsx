@@ -1,6 +1,5 @@
 
-import { SuperButton } from '@superapp/shared-ui';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+import { StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native';
 import {
   SafeAreaProvider,
   useSafeAreaInsets,
@@ -22,8 +21,7 @@ function AppContent() {
 
   return (
     <View style={styles.container}>
-      <SuperButton title={'Navigate to Mini App A'} onPress={function () { }}>
-      </SuperButton>
+      <Text> This is Mini App B</Text>
     </View >
   );
 }

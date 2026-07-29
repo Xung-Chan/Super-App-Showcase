@@ -43,7 +43,7 @@ export default Repack.defineRspackConfig((env) => ({
 
     new Repack.plugins.ModuleFederationPluginV2({
       name: 'mini_app_a',
-      filename: "miniApp.container.bundle",
+      filename: "mini_app_a.container.bundle",
       dts: false,
       exposes: {
         './App': './App',
@@ -61,6 +61,16 @@ export default Repack.defineRspackConfig((env) => ({
           singleton: true,
           eager: true,
         },
+        // '@react-navigation/native': {
+        //   singleton: true,
+        //   eager: false,
+        //   requiredVersion: false,
+        // },
+        // '@react-navigation/core': {
+        //   singleton: true,
+        //   eager: false,
+        //   requiredVersion: false,
+        // },
       },
     }),
   ],

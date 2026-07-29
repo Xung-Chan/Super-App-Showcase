@@ -5,8 +5,9 @@ import * as Repack from '@callstack/repack';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const MINI_APP_PORT = 8082;
 
+const mini_app_a_port = 8082
+const mini_app_b_port = 8083
 /**
  * Rspack configuration enhanced with Re.Pack defaults for React Native.
  *
@@ -47,7 +48,8 @@ export default Repack.defineRspackConfig((env) => ({
       name: 'host_app',
       dts: false,
       remotes: {
-        mini_app_a: `mini_app_a@http://localhost:${MINI_APP_PORT}/${env.platform}/mf-manifest.json`,
+        mini_app_a: `mini_app_a@http://localhost:${mini_app_a_port}/${env.platform}/mf-manifest.json`,
+        mini_app_b: `mini_app_b@http://localhost:${mini_app_b_port}/${env.platform}/mf-manifest.json`,
       },
       shared: {
         react: {
@@ -62,6 +64,14 @@ export default Repack.defineRspackConfig((env) => ({
           singleton: true,
           eager: true,
         },
+        // '@react-navigation/native': {
+        //   singleton: true,
+        //   eager: false,
+        // },
+        // '@react-navigation/core': {
+        //   singleton: true,
+        //   eager: false,
+        // },
       },
     }),
   ],

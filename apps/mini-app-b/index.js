@@ -1,5 +1,10 @@
 /**
  * @format
+ *
+ * bootstrap.js — Actual app initialization code.
+ * Separated from index.js to create an async boundary required by
+ * Module Federation. This ensures the Federation Runtime is fully
+ * initialized before any shared modules are loaded.
  */
 
 import { Script, ScriptManager } from '@callstack/repack/client';
