@@ -6,12 +6,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const workspaceRoot = path.resolve(__dirname, '../..');
 
-const appName = 'mini_app_b';
-const devServerPort = 8083;
+const appName = 'mini_app_a';
+const devServerPort = 8082;
 
 const sharedSingleton = {
   singleton: true,
-  eager: false,
+  eager: true,
   requiredVersion: false,
 };
 

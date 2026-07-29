@@ -1,11 +1,5 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
+import { SuperButton } from '@superapp/shared-ui';
 import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
 import {
   SafeAreaProvider,
@@ -28,17 +22,16 @@ function AppContent() {
 
   return (
     <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
+      <SuperButton title={'Navigate to Mini App A'} onPress={function () { }}>
+      </SuperButton>
+    </View >
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 50
   },
 });
 
