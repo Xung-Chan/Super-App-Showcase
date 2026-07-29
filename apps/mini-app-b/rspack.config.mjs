@@ -11,7 +11,7 @@ const devServerPort = 8083;
 
 const sharedSingleton = {
   singleton: true,
-  eager: true,
+  eager: false,
   requiredVersion: false,
 };
 
@@ -53,10 +53,17 @@ export default (env = {}) => {
             path.join(workspaceRoot, 'packages'),
             path.join(workspaceRoot, 'node_modules/react-native'),
             path.join(workspaceRoot, 'node_modules/@react-native'),
+            path.join(workspaceRoot, 'node_modules/@react-navigation'),
             path.join(workspaceRoot, 'node_modules/@react-native-community'),
             path.join(workspaceRoot, 'node_modules/react-native-safe-area-context'),
+            path.join(workspaceRoot, 'node_modules/react-native-screens'),
+            path.join(workspaceRoot, 'node_modules/react-freeze'),
             path.join(workspaceRoot, 'node_modules/@callstack/repack'),
           ],
+          type: 'javascript/auto',
+          resolve: {
+            fullySpecified: false,
+          },
           use: {
             loader: 'babel-loader',
             options: {
