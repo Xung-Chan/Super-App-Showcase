@@ -64,11 +64,15 @@ export default Repack.defineRspackConfig((env) => ({
           singleton: true,
           eager: true,
         },
+        '@react-native/new-app-screen': {
+          singleton: true,
+          eager: true,
+        },
         // '@react-navigation/native': {
         //   singleton: true,
-        //   eager: false,
+        //   eager: true,
         // },
-        // '@react-navigation/core': {
+        // '@react-navigation/native-stack': {
         //   singleton: true,
         //   eager: false,
         // },
