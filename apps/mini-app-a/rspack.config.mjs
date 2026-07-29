@@ -1,112 +1,67 @@
-import * as Repack from '@callstack/repack';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import * as Repack from '@callstack/repack';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const workspaceRoot = path.resolve(__dirname, '../..');
 
-const appName = 'mini_app_a';
-const devServerPort = 8082;
+/**
+ * Rspack configuration enhanced with Re.Pack defaults for React Native.
+ *
+ * Learn about Rspack configuration: https://rspack.dev/config/
+ * Learn about Re.Pack configuration: https://re-pack.dev/docs/guides/configuration
+ */
 
-const sharedSingleton = {
-  singleton: true,
-  eager: false,
-  requiredVersion: false,
-};
-
-export default (env = {}) => {
-  const {
-    mode = 'development',
-    context = __dirname,
-    entry = './index.js',
-    platform = 'android',
-    minimize = mode === 'production',
-  } = env;
-
-  return {
-    mode,
-    context,
-    entry,
-    devServer: {
-      port: devServerPort,
-    },
-    output: {
-      clean: true,
-      hashFunction: 'xxhash64',
-      path: path.join(__dirname, 'build', 'generated', platform),
-      filename: 'index.bundle',
-      chunkFilename: '[name].chunk.bundle',
-    },
-    resolve: {
-      ...Repack.getResolveOptions(platform),
-      alias: {
-        '@superapp/shared-ui': path.join(workspaceRoot, 'packages/shared-ui'),
+export default Repack.defineRspackConfig((env) => ({
+  context: __dirname,
+  entry: './index.js',
+  resolve: {
+    ...Repack.getResolveOptions(env.platform, {
+      enablePackageExports: true,
+      preferNativePlatform: true,
+    }),
+  },
+  output: {
+    uniqueName: 'mini_app_a',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.[cm]?[jt]sx?$/,
+        type: 'javascript/auto',
+        use: {
+          loader: '@callstack/repack/babel-swc-loader',
+          parallel: true,
+          options: {},
+        },
       },
-    },
-    module: {
-      rules: [
-        {
-          test: /\.[cm]?[jt]sx?$/,
-          include: [
-            __dirname,
-            path.join(workspaceRoot, 'packages'),
-            path.join(workspaceRoot, 'node_modules/react-native'),
-            path.join(workspaceRoot, 'node_modules/@react-native'),
-            path.join(workspaceRoot, 'node_modules/@react-navigation'),
-            path.join(workspaceRoot, 'node_modules/@react-native-community'),
-            path.join(workspaceRoot, 'node_modules/react-native-safe-area-context'),
-            path.join(workspaceRoot, 'node_modules/react-native-screens'),
-            path.join(workspaceRoot, 'node_modules/react-freeze'),
-            path.join(workspaceRoot, 'node_modules/@callstack/repack'),
-          ],
-          type: 'javascript/auto',
-          resolve: {
-            fullySpecified: false,
-          },
-          use: {
-            loader: 'babel-loader',
-            options: {
-              babelrc: false,
-              cacheDirectory: true,
-              configFile: path.join(__dirname, 'babel.config.js'),
-            },
-          },
-        },
-        {
-          test: Repack.getAssetExtensionsRegExp(),
-          use: {
-            loader: '@callstack/repack/assets-loader',
-            options: {
-              platform,
-            },
-          },
-        },
-      ],
-    },
-    optimization: {
-      minimize,
-      chunkIds: 'named',
-    },
-    plugins: [
-      new Repack.RepackPlugin({
-        platform,
-      }),
-      new Repack.plugins.ModuleFederationPluginV1({
-        name: appName,
-        exposes: {
-          './App': './App.tsx',
-        },
-        shared: {
-          react: sharedSingleton,
-          'react-native': sharedSingleton,
-          'react-native-safe-area-context': sharedSingleton,
-          '@react-native/normalize-colors': sharedSingleton,
-          '@react-native/assets-registry': sharedSingleton,
-          '@react-native/new-app-screen': sharedSingleton,
-          '@superapp/shared-ui': sharedSingleton,
-        },
-      }),
+      ...Repack.getAssetTransformRules(),
     ],
-  };
-};
+  },
+  plugins: [
+    new Repack.RepackPlugin(),
+
+    new Repack.plugins.ModuleFederationPluginV2({
+      name: 'mini_app_a',
+      filename: "miniApp.container.bundle",
+      dts: false,
+      exposes: {
+        './App': './App',
+      },
+      shared: {
+        react: {
+          singleton: true,
+          eager: true,
+        },
+        'react-native': {
+          singleton: true,
+          eager: true,
+        },
+        'react-native-safe-area-context': {
+          singleton: true,
+          eager: true,
+        },
+      },
+    }),
+  ],
+}));

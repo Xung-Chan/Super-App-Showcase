@@ -1,0 +1,107 @@
+import * as Repack from '@callstack/repack';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const workspaceRoot = path.resolve(__dirname, '../..');
+
+const appName = 'host_app';
+const devServerPort = 8081;
+
+const remotes = {
+  mini_app_a: 8082,
+  // mini_app_b: 8083,
+};
+
+const sharedSingleton = {
+  singleton: true,
+  eager: true,
+  requiredVersion: false,
+};
+
+function getRemote(remoteName, port, platform) {
+  const envKey = `${remoteName.toUpperCase()}_REMOTE`;
+  const envUrlKey = `${remoteName.toUpperCase()}_REMOTE_URL`;
+  const fallbackUrl = `http://localhost:${port}/${platform}/${remoteName}.container.bundle`;
+  const remote = process.env[envKey] ?? process.env[envUrlKey] ?? fallbackUrl;
+
+  return remote.includes('@') ? remote : `${remoteName}@${remote}`;
+}
+
+export default Repack.defineRspackConfig(({ mode, platform }) => {
+
+  return {
+    mode,
+    context: __dirname,
+    ignoreWarnings: [
+      { module: /react-native-worklets[\\/]src[\\/]bundleMode[\\/]metroOverrides/ },
+      { module: /react-native-reanimated[\\/]src[\\/]jestUtils/ },
+      { module: /@gorhom[\\/]bottom-sheet[\\/].*BottomSheetFlashList/ },
+    ],
+    entry: './index.js',
+    //todo
+    devServer: {
+      port: devServerPort,
+    },
+    output: {
+      // clean: true,
+      // hashFunction: 'xxhash64',
+      // path: path.join(__dirname, 'build', 'generated', platform),
+      // filename: 'index.bundle',
+      // chunkFilename: '[name].chunk.bundle',
+      uniqueName: 'sas-host',
+    },
+    // resolve: {
+    //   ...Repack.getResolveOptions(platform),
+    //   alias: {
+    //     '@superapp/shared-ui': path.join(workspaceRoot, 'packages/shared-ui'),
+    //   },
+    // },
+    module: {
+      rules: [
+        {
+          test: /\.[cm]?[jt]sx?$/,
+          use: {
+            loader: '@callstack/repack/babel-swc-loader',
+            parallel: true,
+            options: {},
+          },
+          type: 'javascript/auto',
+        },
+        ...Repack.getAssetTransformRules(),
+
+      ],
+    },
+    // optimization: {
+    //   minimize,
+    //   chunkIds: 'named',
+    // },
+    plugins: [
+      new Repack.RepackPlugin({}),
+      new ReanimatedPlugin({ unstable_disableTransform: true }),
+      new Repack.plugins.ModuleFederationPluginV2({
+        name: appName,
+        dts: false,
+
+        remotes: Object.fromEntries(
+          Object.entries(remotes).map(([remoteName, port]) => [
+            remoteName,
+            getRemote(remoteName, port, platform),
+          ])
+        ),
+        shared: {
+          react: sharedSingleton,
+          'react-native': sharedSingleton,
+          'react-native-safe-area-context': sharedSingleton,
+          'react-native-vector-icons': sharedSingleton,
+          '@react-native/normalize-colors': sharedSingleton,
+          '@react-native/assets-registry': sharedSingleton,
+          '@react-native/new-app-screen': sharedSingleton,
+          '@superapp/shared-ui': sharedSingleton,
+        },
+      }),
+    ],
+  };
+})
