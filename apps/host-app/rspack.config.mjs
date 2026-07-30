@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as Repack from '@callstack/repack';
+import { getSharedDependencies } from '@superapp/shared-deps';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -51,32 +52,7 @@ export default Repack.defineRspackConfig((env) => ({
         mini_app_a: `mini_app_a@http://localhost:${mini_app_a_port}/${env.platform}/mf-manifest.json`,
         mini_app_b: `mini_app_b@http://localhost:${mini_app_b_port}/${env.platform}/mf-manifest.json`,
       },
-      shared: {
-        react: {
-          singleton: true,
-          eager: true,
-        },
-        'react-native': {
-          singleton: true,
-          eager: true,
-        },
-        'react-native-safe-area-context': {
-          singleton: true,
-          eager: true,
-        },
-        '@react-native/new-app-screen': {
-          singleton: true,
-          eager: true,
-        },
-        // '@react-navigation/native': {
-        //   singleton: true,
-        //   eager: true,
-        // },
-        // '@react-navigation/native-stack': {
-        //   singleton: true,
-        //   eager: false,
-        // },
-      },
+      shared: getSharedDependencies({ eager: true })
     }),
   ],
 }));
