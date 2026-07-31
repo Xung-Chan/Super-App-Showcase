@@ -1,18 +1,8 @@
 {
-  "react": {
-    "name": "react",
-    "version": "19.2.3"
-  },
-  "react-native": {
-    "name": "react-native",
-    "version": "0.86.0"
-  },
-  "react-native-safe-area-context": {
-    "name": "react-native-safe-area-context",
-    "version": "5.8.0"
-  },
-  "@react-native/new-app-screen": {
-    "name": "@react-native/new-app-screen",
-    "version": "0.86.0"
-  }
+  "react": "19.2.3",
+  "react-native": "0.86.0",
+  "react-native-safe-area-context": "5.8.0",
+  "@react-native/new-app-screen": "0.86.0",
+  "@superapp/shared-ui": "workspace:*",
+  "@superapp/shared-deps": "workspace:*"
 }
