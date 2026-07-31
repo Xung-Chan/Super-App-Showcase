@@ -1,5 +1,4 @@
-import React from 'react';
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 export const SuperButton = ({ title, onPress }: { title: string, onPress: () => void }) => (
     <TouchableOpacity style={styles.btn} onPress={onPress} >
