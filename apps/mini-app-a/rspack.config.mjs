@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as Repack from '@callstack/repack';
+impỏt * from '@superapp/shared-deps';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,30 +49,7 @@ export default Repack.defineRspackConfig((env) => ({
       exposes: {
         './App': './App',
       },
-      shared: {
-        react: {
-          singleton: true,
-          eager: true,
-        },
-        'react-native': {
-          singleton: true,
-          eager: true,
-        },
-        'react-native-safe-area-context': {
-          singleton: true,
-          eager: true,
-        },
-        // '@react-navigation/native': {
-        //   singleton: true,
-        //   eager: false,
-        //   requiredVersion: false,
-        // },
-        // '@react-navigation/core': {
-        //   singleton: true,
-        //   eager: false,
-        //   requiredVersion: false,
-        // },
-      },
+      shared: getSharedDependencies({ eager: false })
     }),
   ],
 }));
