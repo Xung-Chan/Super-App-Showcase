@@ -2791,6 +2791,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-masked-view/masked-view@npm:^0.3.2":
+  version: 0.3.2
+  resolution: "@react-native-masked-view/masked-view@npm:0.3.2"
+  peerDependencies:
+    react: ">=16"
+    react-native: ">=0.57"
+  checksum: 10c0/4ec84b7af2ded49dc21f17cc723a0ef341076cbe40cf758dd2daff8734bea63ba83e2fee7e63958984385314b8915b6804135997e07697abdd4141217c847fe9
+  languageName: node
+  linkType: hard
+
 "@react-native/assets-registry@npm:0.86.0":
   version: 0.86.0
   resolution: "@react-native/assets-registry@npm:0.86.0"
@@ -3715,6 +3725,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "SuperAppShowcase@workspace:."
   dependencies:
+    "@react-native-masked-view/masked-view": "npm:^0.3.2"
     prettier: "npm:^3.0.0"
     turbo: "npm:2.7.5"
   languageName: unknown
