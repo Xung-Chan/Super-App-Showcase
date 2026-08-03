@@ -1,41 +1,80 @@
-
-// export const ENDPOINTS = {
-//     LOGIN: 'http://10.100.104.175:8082/api/v1/auth/login',
-//     REFRESH_TOKEN: 'http://10.100.104.175:8082/api/v1/auth/refresh-token',
-
-//     USER_PROFILE: (userId: string) => `http://10.100.104.175:8081/api/v1/users/${userId}`,
-
-//     COMMISSION_OVERVIEW: 'http://10.100.104.175:8088/api/v1/commission/transactions/overview',
-//     EXPECTED_COMMISSIONS: 'http://10.100.104.175:8088/api/v1/commission/transactions/collaborator',
-//     DETAIL_COMMISSION: (id: string) => `http://10.100.104.175:8088/api/v1/commission/transactions/${id}/details`,
-
-//     MY_PRODUCTS: 'http://10.100.104.175:8087/api/v1/products',
-//     PRODUCT_DETAIL: (id: string) => `http://10.100.104.175:8087/api/v1/products/${id}`,
-
-//     POLICIES: 'http://10.100.104.175:8089/api/v1/policies',
-//     POLICY_DETAIL: (id: string) => `http://10.100.104.175:8089/api/v1/policies/${id}`,
-//     POLICY_DETAIL_INCOME: (id: string) => ``,
-//     POLICY_OVERVIEW: 'http://10.100.104.175:8089/api/v1/policies/overview'
-
-// } as const;
-
-
+/**
+ * REST API Endpoints Configuration
+ * Supporting full CRUD operations, Filtering, and Nested Resources
+ */
 
 export const ENDPOINTS = {
-    LOGIN: 'https://affluent-unfixed-capital.ngrok-free.dev/auth-service/api/v1/auth/login',
-    REFRESH_TOKEN: 'https://affluent-unfixed-capital.ngrok-free.dev/auth-service/api/v1/auth/refresh-token',
+    // ==========================================
+    // 1. POSTS RESOURCE (Full CRUD, Filtering, Nested)
+    // ==========================================
+    POSTS: {
+        /** 2. Listing all resources: GET /posts */
+        LIST: '/posts',
 
-    USER_PROFILE: (userId: string) => `https://affluent-unfixed-capital.ngrok-free.dev/user-service/api/v1/users/${userId}`,
+        /** 1. Getting a resource: GET /posts/:id */
+        DETAIL: (id: string | number) => `/posts/${id}`,
 
-    COMMISSION_OVERVIEW: 'https://affluent-unfixed-capital.ngrok-free.dev/commission-service/api/v1/commission/transactions/overview',
-    EXPECTED_COMMISSIONS: 'https://affluent-unfixed-capital.ngrok-free.dev/commission-service/api/v1/commission/transactions/collaborator',
-    DETAIL_COMMISSION: (id: string) => `https://affluent-unfixed-capital.ngrok-free.dev/commission-service/api/v1/commission/transactions/${id}/details`,
+        /** 3. Creating a resource: POST /posts */
+        CREATE: '/posts',
 
-    MY_PRODUCTS: 'https://affluent-unfixed-capital.ngrok-free.dev/product-service/api/v1/products',
+        /** 4. Updating a resource: PUT /posts/:id */
+        UPDATE: (id: string | number) => `/posts/${id}`,
 
-    POLICIES: 'https://affluent-unfixed-capital.ngrok-free.dev/policy-service/api/v1/policies',
-    POLICY_DETAIL: (id: string) => `https://affluent-unfixed-capital.ngrok-free.dev/policy-service/api/v1/policies/${id}`,
-    POLICY_DETAIL_INCOME: (id: string) => ``,
-    POLICY_OVERVIEW: 'https://affluent-unfixed-capital.ngrok-free.dev/policy-service/api/v1/policies/overview'
+        /** 5. Patching a resource: PATCH /posts/:id */
+        PATCH: (id: string | number) => `/posts/${id}`,
+
+        /** 6. Deleting a resource: DELETE /posts/:id */
+        DELETE: (id: string | number) => `/posts/${id}`,
+
+        /** 7. Filtering resources: GET /posts?userId=:userId */
+        FILTER_BY_USER: (userId: string | number) => `/posts?userId=${userId}`,
+
+        /** 8. Listing nested resources: GET /posts/:id/comments */
+        COMMENTS: (postId: string | number) => `/posts/${postId}/comments`,
+    },
+
+    // ==========================================
+    // 2. USERS RESOURCE (Nested & Filter Examples)
+    // ==========================================
+    USERS: {
+        /** Listing all users: GET /users */
+        LIST: '/users',
+
+        /** Getting a user profile: GET /users/:id */
+        DETAIL: (id: string | number) => `/users/${id}`,
+
+        /** Creating a user: POST /users */
+        CREATE: '/users',
+
+        /** Updating a user: PUT /users/:id */
+        UPDATE: (id: string | number) => `/users/${id}`,
+
+        /** Patching a user: PATCH /users/:id */
+        PATCH: (id: string | number) => `/users/${id}`,
+
+        /** Deleting a user: DELETE /users/:id */
+        DELETE: (id: string | number) => `/users/${id}`,
+
+        /** 8. Listing nested resources: GET /users/:id/posts */
+        POSTS: (userId: string | number) => `/users/${userId}/posts`,
+
+        /** 8. Listing nested resources: GET /users/:id/todos */
+        TODOS: (userId: string | number) => `/users/${userId}/todos`,
+    },
+
+    // ==========================================
+    // 3. COMMENTS RESOURCE
+    // ==========================================
+    COMMENTS: {
+        LIST: '/comments',
+        DETAIL: (id: string | number) => `/comments/${id}`,
+        CREATE: '/comments',
+        UPDATE: (id: string | number) => `/comments/${id}`,
+        PATCH: (id: string | number) => `/comments/${id}`,
+        DELETE: (id: string | number) => `/comments/${id}`,
+
+        /** 7. Filtering resources: GET /comments?postId=:postId */
+        FILTER_BY_POST: (postId: string | number) => `/comments?postId=${postId}`,
+    },
 
 } as const;
