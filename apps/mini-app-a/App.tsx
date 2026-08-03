@@ -1,36 +1,15 @@
+/**
+ * MiniAppA — Federated entry point.
+ *
+ * Exposed via Module Federation as `mini_app_a/App`.
+ *
+ * Rules for federated mini-apps:
+ *  - NO NavigationContainer   → Host App owns the top-level navigator.
+ *  - NO SafeAreaProvider      → Host App already provides it.
+ *  - NO AppRegistry           → Done in index.js (standalone dev only).
+ *  - Export a plain Stack.Navigator so Host App can nest it as a screen.
+ */
 
-import { StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import AppContainer from './src/core/navigation/AppNavigation';
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <Text> This is Mini App A</Text>
-    </View >
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 50
-  },
-});
-
-export default App;
+export default AppContainer;

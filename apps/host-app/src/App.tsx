@@ -68,13 +68,13 @@ function HomeScreen({
         <Text style={styles.title}>Host App</Text>
 
         <Button
-          title="Go to Mini App A"
+          title="Open JSONPlaceholder Mini-App"
           onPress={() => navigation.navigate('MiniAppA')}
         />
-        <Button
+        {/* <Button
           title="Go to Mini App B"
           onPress={() => navigation.navigate('MiniAppB')}
-        />
+        /> */}
       </View>
     </>
   );
