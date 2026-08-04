@@ -1,4 +1,3 @@
-export interface ListPostResponse extends Array<PostDetailResponse> { }
 
 export interface PostDetailResponse {
     userId: number;

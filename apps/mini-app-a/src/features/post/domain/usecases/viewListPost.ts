@@ -1,10 +1,10 @@
-import { ListPostEntity } from "@post/domain/entities/PostEntity";
+import { PostEntity } from "../entities/PostEntity";
 
 export interface ViewListPostRepository {
-    getListPost(): Promise<ListPostEntity>;
+    getListPost(): Promise<PostEntity[]>;
 }
 
 
-export const viewListPost = (repository: ViewListPostRepository) => async (): Promise<ListPostEntity> => {
+export const viewListPost = (repository: ViewListPostRepository) => async (): Promise<PostEntity[]> => {
     return repository.getListPost();
 }

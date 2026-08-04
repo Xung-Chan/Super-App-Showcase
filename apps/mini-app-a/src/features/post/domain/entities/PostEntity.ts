@@ -1,4 +1,3 @@
-export interface ListPostEntity extends Array<PostEntity> { }
 
 export interface PostEntity {
     id: number;
