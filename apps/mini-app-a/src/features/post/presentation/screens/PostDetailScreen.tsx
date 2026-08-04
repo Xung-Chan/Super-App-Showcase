@@ -137,9 +137,19 @@ export const PostDetailScreen = () => {
     }
 
     return (
-      <View style={styles.articleCard}>
-        <Text style={styles.articleBody}>{post.body}</Text>
-      </View>
+      <>
+        {/* Title card floating below header */}
+        <View style={styles.titleCard}>
+          <Text style={styles.titleCardText} numberOfLines={2}>
+            {post.title}
+          </Text>
+        </View>
+
+        {/* Article body card */}
+        <View style={styles.articleCard}>
+          <Text style={styles.articleBody}>{post.body}</Text>
+        </View>
+      </>
     );
   };
 
@@ -203,7 +213,7 @@ export const PostDetailScreen = () => {
                 <View style={styles.commentsHeading}>
                   <CommentBubbleIcon />
                   <Text style={styles.commentsTitle}>
-                    Bình luận ({MOCK_COMMENTS.length})
+                    Bình luận (12)
                   </Text>
                 </View>
               </View>
@@ -256,9 +266,11 @@ const CommentCard = React.memo(({ comment }: { comment: CommentItem }) => {
 
   return (
     <View style={styles.commentRow}>
-      {/* Avatar */}
-      <View style={styles.commentAvatar}>
-        <Text style={styles.commentAvatarText}>{comment.initials}</Text>
+      {/* Avatar (paddingTop aligns it with bubble top) */}
+      <View style={styles.commentAvatarWrapper}>
+        <View style={styles.commentAvatar}>
+          <Text style={styles.commentAvatarText}>{comment.initials}</Text>
+        </View>
       </View>
 
       {/* Bubble + actions */}
@@ -269,7 +281,7 @@ const CommentCard = React.memo(({ comment }: { comment: CommentItem }) => {
           <View style={styles.commentHeader}>
             <Text style={styles.commentName}>{comment.name}</Text>
             <Text style={styles.commentEmail} numberOfLines={1}>
-              -{comment.email}
+              {'• '}{comment.email}
             </Text>
           </View>
           {/* Body */}
@@ -456,12 +468,39 @@ const styles = StyleSheet.create({
     paddingBottom: 96,
   },
 
+  // ── Title card (floating pill below header) ──────────────────────────────
+  titleCard: {
+    backgroundColor: COLORS.white,
+    borderRadius: 999,
+    borderWidth: 1,
+    borderColor: COLORS.inputBorder,
+    paddingHorizontal: 20,
+    paddingVertical: 9,
+    marginBottom: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: COLORS.shadow,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.04,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  titleCardText: {
+    color: COLORS.text,
+    fontSize: 20,
+    lineHeight: 28,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+
   // ── Article card ────────────────────────────────────────────────────────
   articleCard: {
     backgroundColor: COLORS.white,
     borderRadius: 24,
+    borderWidth: 1,
+    borderColor: COLORS.inputBorder,
     paddingHorizontal: 20,
-    paddingTop: 19,
+    paddingTop: 20,
     paddingBottom: 20,
     marginBottom: 32,
     shadowColor: COLORS.shadow,
@@ -516,6 +555,10 @@ const styles = StyleSheet.create({
     gap: 12,
     marginBottom: 16,
   },
+  commentAvatarWrapper: {
+    paddingTop: 12,
+    flexShrink: 0,
+  },
   commentAvatar: {
     width: 40,
     height: 40,
@@ -523,7 +566,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.avatarBg,
     alignItems: 'center',
     justifyContent: 'center',
-    flexShrink: 0,
   },
   commentAvatarText: {
     color: COLORS.avatarText,
@@ -555,7 +597,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    flexWrap: 'wrap',
+    flexWrap: 'nowrap',
   },
   commentName: {
     color: COLORS.text,
