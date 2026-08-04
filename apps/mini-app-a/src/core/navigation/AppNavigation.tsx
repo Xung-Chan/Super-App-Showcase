@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { PostDetailScreen } from '../../features/post-detail/presentation/screens/PostDetailScreen';
-import { PostManagementScreen } from '../../features/post-management/presentation/screens/PostManagementScreen';
 import { RootStackParamList } from './navigation-types';
+import { PostDetailScreen } from '@post/presentation/screens/PostDetailScreen';
+import { PostManagementScreen } from '@post/presentation/screens/PostManagementScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 

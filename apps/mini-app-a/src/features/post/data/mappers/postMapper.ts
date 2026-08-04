@@ -1,15 +1,10 @@
-import { ListPostEntity } from "../../domain/entities/PostEntity";
-import { ListPostResponse } from "../dtos/listPostDto";
+import { PostEntity } from "@post/domain/entities/PostEntity"
+import { PostDetailResponse } from "@post/data/dtos/PostDto"
 
 export const postMapper = {
-    toDomain(response: ListPostResponse): ListPostEntity {
-        return response.map(
-            (item) => ({
-                userId: item.userId,
-                id: item.id,
-                title: item.title,
-                body: item.body,
-            })
-        )
+    toDomain(response: PostDetailResponse): PostEntity {
+        return {
+            ...response
+        }
     }
 }
