@@ -1,14 +1,13 @@
 import React from 'react';
 import {
-  Image,
   Pressable,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
 import { PostEntity } from '@post/domain/entities/PostEntity';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const commentIcon = require('../../../../assets/post/comment.png');
 
 export interface PostCardProps {
   post: PostEntity;
@@ -40,11 +39,8 @@ export const PostCard = React.memo(({ post, onPressComments }: PostCardProps) =>
         ]}
         hitSlop={8}
       >
-        <Image
-          source={commentIcon}
-          style={styles.commentIcon}
-          resizeMode="contain"
-        />
+        <Icon name="comment-outline" size={18} color={COLORS.text} />
+
         <Text style={styles.commentsText}>Comments</Text>
       </Pressable>
     </View>

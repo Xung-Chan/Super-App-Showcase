@@ -41,7 +41,7 @@ function App() {
           <Stack.Screen
             name="MiniAppA"
             component={MiniAppScreenA}
-            options={{ title: 'Mini App' }}
+            options={{ headerShown: false }}
           />
 
           <Stack.Screen

@@ -1,22 +1,20 @@
+import type { PostEntity } from '@post/domain/entities/PostEntity';
+import { MiniAppHeader } from '@superapp/shared-ui';
 import React, { useCallback, useMemo, useState } from 'react';
 import type { ListRenderItemInfo } from 'react-native';
 import {
   ActivityIndicator,
   FlatList,
-  Image,
   RefreshControl,
-  StatusBar,
   StyleSheet,
   Text,
   TextInput,
-  View,
+  View
 } from 'react-native';
-import type { PostEntity } from '@post/domain/entities/PostEntity';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { PostCard } from '../components/PostCard';
 import { usePostVM } from '../viewmodels/usePostVM';
 
-const documentIcon = require('../../../../assets/post/document-outline.png');
-const searchIcon = require('../../../../assets/post/search.png');
 
 export const PostManagementScreen = () => {
   const { listPost, loading, error, onPressPost, searchByUserId, fetchPosts } = usePostVM();
@@ -77,28 +75,15 @@ export const PostManagementScreen = () => {
 
   return (
     <View style={styles.screen}>
-      <StatusBar barStyle="light-content" backgroundColor={COLORS.primary} />
-
-      <View style={styles.header}>
-        <View style={styles.headerContent}>
-          <View style={styles.headerIconWrap}>
-            <Image
-              source={documentIcon}
-              style={styles.headerIcon}
-              resizeMode="contain"
-            />
-          </View>
-
-          <Text style={styles.headerTitle}>DANH SÁCH BÀI VIẾT</Text>
-        </View>
-      </View>
+      <MiniAppHeader title="Danh sách bài viết" backgroundColor={COLORS.primary} />
 
       <View style={styles.searchWrapper}>
         <View style={styles.searchContainer}>
-          <Image
-            source={searchIcon}
+          <Icon
+            name="magnify"
+            size={18}
+            color={COLORS.placeholder}
             style={styles.searchIcon}
-            resizeMode="contain"
           />
           <TextInput
             value={searchUserId}
@@ -199,7 +184,7 @@ const styles = StyleSheet.create({
   },
   searchWrapper: {
     paddingHorizontal: 16,
-    marginTop: -21,
+    marginTop: 16,
     marginBottom: 16,
     zIndex: 1,
   },

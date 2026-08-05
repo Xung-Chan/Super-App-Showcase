@@ -4,7 +4,10 @@
   "main": "index.ts",
   "license": "MIT",
   "peerDependencies": {
+    "@react-navigation/native": "*",
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-safe-area-context": "*",
+    "react-native-vector-icons": "*"
   }
 }

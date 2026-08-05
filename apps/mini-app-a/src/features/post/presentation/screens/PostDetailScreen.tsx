@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import type { ListRenderItemInfo } from 'react-native';
 import {
   ActivityIndicator,
@@ -6,111 +6,39 @@ import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
-  StatusBar,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useRoute } from '@react-navigation/native';
+
 import type { RouteProp } from '@react-navigation/native';
 import type { RootStackParamList } from '@navigation/navigation-types';
-import type { PostEntity } from '@post/domain/entities/PostEntity';
-import { postUsecases } from '@post/post.container';
-
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
-type PostDetailNavigation = NativeStackNavigationProp<
-  RootStackParamList,
-  'PostDetailScreen'
->;
+import { MiniAppHeader } from '@superapp/shared-ui';
+import { CommentEntity } from '@post/domain/entities/CommentEntity';
+import { usePostDetailVM } from '../viewmodels/usePostDetailVM';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type PostDetailRoute = RouteProp<RootStackParamList, 'PostDetailScreen'>;
 
-interface CommentItem {
-  id: number;
-  name: string;
-  email: string;
-  body: string;
-  initials: string;
-}
-
-// ---------------------------------------------------------------------------
-// Mock comments (design shows comment section; no comment API in codebase)
-// ---------------------------------------------------------------------------
-
-const MOCK_COMMENTS: CommentItem[] = [
-  {
-    id: 1,
-    name: 'User 2',
-    email: 'Jayne_Kuhic@sydney.com',
-    body: 'Bài viết rất hữu ích, cảm ơn tác giả đã chia sẻ!',
-    initials: 'U2',
-  },
-  {
-    id: 2,
-    name: 'User 3',
-    email: 'Nikita@garfield.biz',
-    body: 'Nội dung rõ ràng và dễ hiểu. Mình đã học được nhiều thứ từ bài này.',
-    initials: 'U3',
-  },
-  {
-    id: 3,
-    name: 'User 4',
-    email: 'Lew@alysha.tv',
-    body: 'Cảm ơn bạn đã chia sẻ! Mình sẽ thử áp dụng ngay.',
-    initials: 'U4',
-  },
-];
-
-// ---------------------------------------------------------------------------
-// Screen
-// ---------------------------------------------------------------------------
 
 export const PostDetailScreen = () => {
-  const navigation = useNavigation<PostDetailNavigation>();
   const route = useRoute<PostDetailRoute>();
   const { id } = route.params;
 
-  const [post, setPost] = useState<PostEntity | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { listComment, loading, error, post, handleCreateComment } = usePostDetailVM(Number(id));
   const [commentText, setCommentText] = useState('');
-
-  const loadPost = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const result = await postUsecases.getPostDetail({ id: Number(id) });
-      setPost(result);
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : 'Không thể tải bài viết',
-      );
-    } finally {
-      setLoading(false);
-    }
-  }, [id]);
-
-  useEffect(() => {
-    loadPost();
-  }, [loadPost]);
-
-  const handleBack = useCallback(() => {
-    navigation.goBack();
-  }, [navigation]);
 
   const handleSendComment = useCallback(() => {
     if (commentText.trim()) {
+      handleCreateComment(commentText.trim());
       setCommentText('');
     }
-  }, [commentText]);
+  }, [commentText, handleCreateComment]);
 
   const renderComment = useCallback(
-    ({ item }: ListRenderItemInfo<CommentItem>) => (
+    ({ item }: ListRenderItemInfo<CommentEntity>) => (
       <CommentCard comment={item} />
     ),
     [],
@@ -137,19 +65,9 @@ export const PostDetailScreen = () => {
     }
 
     return (
-      <>
-        {/* Title card floating below header */}
-        <View style={styles.titleCard}>
-          <Text style={styles.titleCardText} numberOfLines={2}>
-            {post.title}
-          </Text>
-        </View>
-
-        {/* Article body card */}
-        <View style={styles.articleCard}>
-          <Text style={styles.articleBody}>{post.body}</Text>
-        </View>
-      </>
+      <View style={styles.articleCard}>
+        <Text style={styles.articleBody}>{post.body}</Text>
+      </View>
     );
   };
 
@@ -159,45 +77,32 @@ export const PostDetailScreen = () => {
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       keyboardVerticalOffset={0}
     >
-      <StatusBar barStyle="light-content" backgroundColor={COLORS.primary} />
+      <MiniAppHeader title="Chi tiết bài viết" backgroundColor={COLORS.primary} />
 
       {/* ── Hero Header ─────────────────────────────────────────────────── */}
-      <View style={styles.header}>
-        {/* Back + title + badge row */}
-        <View style={styles.headerTop}>
-          <Pressable
-            onPress={handleBack}
-            style={({ pressed }) => [
-              styles.backButton,
-              pressed && styles.pressed,
-            ]}
-            hitSlop={8}
-          >
-            <BackIcon />
-          </Pressable>
-
-          <Text style={styles.headerTitle} numberOfLines={1}>
-            {post?.title ?? ''}
-          </Text>
-
-          <View style={styles.badge}>
-            <Text style={styles.badgeText}>USER {post?.userId ?? ''}</Text>
-          </View>
-        </View>
-
+      <View style={[styles.header, { paddingTop: 16, minHeight: 0, paddingBottom: 64 }]}>
         {/* Meta row */}
         <View style={styles.headerMeta}>
-          <CalendarIcon />
+          <Icon name="calendar-outline" size={14} color={COLORS.metaText} />
           <Text style={styles.metaText}>24 Th10, 2023</Text>
           <Text style={styles.metaDot}>•</Text>
-          <EyeIcon />
+          <Icon name="eye-outline" size={14} color={COLORS.metaText} />
           <Text style={styles.metaText}>1.2k Lượt xem</Text>
         </View>
       </View>
 
+      {/* Fixed Title Card */}
+      {!loading && !error && post && (
+        <View style={[styles.titleCard, { marginHorizontal: 16, marginTop: -32, zIndex: 10 }]}>
+          <Text style={styles.titleCardText} numberOfLines={2}>
+            {post.title}
+          </Text>
+        </View>
+      )}
+
       {/* ── Scrollable content ───────────────────────────────────────────── */}
       <FlatList
-        data={MOCK_COMMENTS}
+        data={listComment}
         keyExtractor={item => String(item.id)}
         renderItem={renderComment}
         style={styles.list}
@@ -211,9 +116,9 @@ export const PostDetailScreen = () => {
             {!loading && !error && post && (
               <View style={styles.commentsSection}>
                 <View style={styles.commentsHeading}>
-                  <CommentBubbleIcon />
+                  <Icon name="comment-outline" size={18} color={COLORS.text} />
                   <Text style={styles.commentsTitle}>
-                    Bình luận (12)
+                    Bình luận ({listComment.length})
                   </Text>
                 </View>
               </View>
@@ -249,7 +154,7 @@ export const PostDetailScreen = () => {
             ]}
             hitSlop={8}
           >
-            <SendIcon />
+            <Icon name="send" size={20} color={COLORS.primary} />
           </Pressable>
         </View>
       </View>
@@ -261,15 +166,23 @@ export const PostDetailScreen = () => {
 // CommentCard
 // ---------------------------------------------------------------------------
 
-const CommentCard = React.memo(({ comment }: { comment: CommentItem }) => {
+const getInitials = (name: string) => {
+  if (!name) return '??';
+  const parts = name.trim().split(' ');
+  if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+  return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+};
+
+const CommentCard = React.memo(({ comment }: { comment: CommentEntity }) => {
   const [liked, setLiked] = useState(false);
+  const initials = getInitials(comment.name);
 
   return (
     <View style={styles.commentRow}>
       {/* Avatar (paddingTop aligns it with bubble top) */}
       <View style={styles.commentAvatarWrapper}>
         <View style={styles.commentAvatar}>
-          <Text style={styles.commentAvatarText}>{comment.initials}</Text>
+          <Text style={styles.commentAvatarText}>{initials}</Text>
         </View>
       </View>
 
@@ -318,44 +231,6 @@ const CommentCard = React.memo(({ comment }: { comment: CommentItem }) => {
 });
 
 const CommentSeparator = () => <View style={styles.commentSeparator} />;
-
-// ---------------------------------------------------------------------------
-// Inline geometric icon components (no external asset dependencies)
-// ---------------------------------------------------------------------------
-
-const BackIcon = () => (
-  <View style={iconStyles.back}>
-    <View style={iconStyles.backChevron} />
-    <View style={iconStyles.backLine} />
-  </View>
-);
-
-const CalendarIcon = () => (
-  <View style={iconStyles.calendar}>
-    <View style={iconStyles.calendarBody} />
-    <View style={iconStyles.calendarBar} />
-  </View>
-);
-
-const EyeIcon = () => (
-  <View style={iconStyles.eye}>
-    <View style={iconStyles.eyeOuter} />
-    <View style={iconStyles.eyeInner} />
-  </View>
-);
-
-const CommentBubbleIcon = () => (
-  <View style={iconStyles.commentWrap}>
-    <View style={iconStyles.commentOuter} />
-    <View style={iconStyles.commentTail} />
-  </View>
-);
-
-const SendIcon = () => (
-  <View style={iconStyles.sendWrap}>
-    <View style={iconStyles.sendArrow} />
-  </View>
-);
 
 // ---------------------------------------------------------------------------
 // Colors
@@ -461,7 +336,7 @@ const styles = StyleSheet.create({
   // ── List ────────────────────────────────────────────────────────────────
   list: {
     flex: 1,
-    marginTop: -48,
+    marginTop: 8,
   },
   listContent: {
     paddingHorizontal: 16,
@@ -699,127 +574,4 @@ const styles = StyleSheet.create({
   },
 });
 
-// ---------------------------------------------------------------------------
-// Icon styles (simple geometric approximations matching design)
-// ---------------------------------------------------------------------------
 
-const iconStyles = StyleSheet.create({
-  // Back arrow  ←
-  back: {
-    width: 19,
-    height: 19,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  backChevron: {
-    position: 'absolute',
-    width: 8,
-    height: 8,
-    borderLeftWidth: 2,
-    borderBottomWidth: 2,
-    borderColor: COLORS.white,
-    transform: [{ rotate: '45deg' }],
-    left: 3,
-    top: 5,
-  },
-  backLine: {
-    position: 'absolute',
-    width: 13,
-    height: 2,
-    backgroundColor: COLORS.white,
-    left: 3,
-    top: 8,
-  },
-
-  // Calendar icon 🗓
-  calendar: {
-    width: 12,
-    height: 13,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  calendarBody: {
-    width: 12,
-    height: 10,
-    borderWidth: 1.5,
-    borderColor: COLORS.metaText,
-    borderRadius: 2,
-    position: 'absolute',
-    bottom: 0,
-  },
-  calendarBar: {
-    width: 8,
-    height: 2,
-    borderRadius: 1,
-    backgroundColor: COLORS.metaText,
-    position: 'absolute',
-    top: 0,
-  },
-
-  // Eye icon 👁
-  eye: {
-    width: 15,
-    height: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  eyeOuter: {
-    width: 15,
-    height: 10,
-    borderRadius: 5,
-    borderWidth: 1.5,
-    borderColor: COLORS.metaText,
-    position: 'absolute',
-  },
-  eyeInner: {
-    width: 5,
-    height: 5,
-    borderRadius: 2.5,
-    backgroundColor: COLORS.metaText,
-  },
-
-  // Comment bubble icon 💬
-  commentWrap: {
-    width: 24,
-    height: 24,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  commentOuter: {
-    width: 20,
-    height: 17,
-    borderRadius: 5,
-    borderWidth: 2,
-    borderColor: COLORS.text,
-    position: 'absolute',
-    top: 2,
-  },
-  commentTail: {
-    width: 6,
-    height: 6,
-    borderLeftWidth: 2,
-    borderBottomWidth: 2,
-    borderColor: COLORS.text,
-    transform: [{ rotate: '-45deg' }],
-    position: 'absolute',
-    bottom: 1,
-    left: 5,
-    backgroundColor: COLORS.screen,
-  },
-
-  // Send arrow icon ➤
-  sendWrap: {
-    width: 19,
-    height: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  sendArrow: {
-    width: 12,
-    height: 12,
-    borderTopWidth: 2,
-    borderRightWidth: 2,
-    borderColor: COLORS.primary,
-    transform: [{ rotate: '45deg' }],
-  },
-});
