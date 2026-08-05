@@ -20,7 +20,13 @@ const postSlice = createSlice({
     name: "post",
     initialState,
     reducers: {
-        getListPostRequested(state, _action: PayloadAction<void>) {
+        filterByUserId(state, action: PayloadAction<{
+            userId: number;
+        }>) {
+            state.loading = true;
+            state.error = null
+        },
+        getListPostRequested(state, action: PayloadAction<void>) {
             state.loading = true;
             state.error = null
         },
@@ -38,7 +44,7 @@ const postSlice = createSlice({
     }
 })
 
-export const { getListPostRequested, getListPostSuccess, getListPostFailure } = postSlice.actions;
+export const { getListPostRequested, getListPostSuccess, getListPostFailure, filterByUserId } = postSlice.actions;
 
 export default postSlice.reducer;
 

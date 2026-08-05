@@ -1,10 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import type { ListRenderItemInfo } from 'react-native';
 import {
   ActivityIndicator,
   FlatList,
   Image,
-  Pressable,
   RefreshControl,
   StatusBar,
   StyleSheet,
@@ -12,91 +11,52 @@ import {
   TextInput,
   View,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { RootStackParamList } from '@navigation/navigation-types';
 import type { PostEntity } from '@post/domain/entities/PostEntity';
-import { postUsecases } from '@post/post.container';
+import { PostCard } from '../components/PostCard';
+import { usePostVM } from '../viewmodels/usePostVM';
 
 const documentIcon = require('../../../../assets/post/document-outline.png');
 const searchIcon = require('../../../../assets/post/search.png');
-const commentIcon = require('../../../../assets/post/comment.png');
-
-type PostManagementNavigation = NativeStackNavigationProp<
-  RootStackParamList,
-  'PostManagementScreen'
->;
-
-type PostCardProps = {
-  post: PostEntity;
-  onPressComments: () => void;
-};
 
 export const PostManagementScreen = () => {
-  const navigation = useNavigation<PostManagementNavigation>();
-  const [posts, setPosts] = useState<PostEntity[]>([]);
+  const { listPost, loading, error, onPressPost, searchByUserId, fetchPosts } = usePostVM();
   const [searchUserId, setSearchUserId] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const loadPosts = useCallback(async (isRefreshing = false) => {
-    if (isRefreshing) {
-      setRefreshing(true);
-    } else {
-      setLoading(true);
-    }
-
-    setError(null);
-
-    try {
-      const response = await postUsecases.getListPost();
-      setPosts(response);
-    } catch (requestError) {
-      const message =
-        requestError instanceof Error
-          ? requestError.message
-          : 'Không thể tải danh sách bài viết';
-      setError(message);
-    } finally {
-      setLoading(false);
-      setRefreshing(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    loadPosts();
-  }, [loadPosts]);
-
-  const filteredPosts = useMemo(() => {
-    const keyword = searchUserId.trim();
-
-    if (!keyword) {
-      return posts;
-    }
-
-    return posts.filter(post => String(post.userId).includes(keyword));
-  }, [posts, searchUserId]);
+  const handleSearchChange = useCallback(
+    (text: string) => {
+      setSearchUserId(text);
+      const trimmed = text.trim();
+      if (!trimmed) {
+        fetchPosts();
+      } else {
+        const id = Number(trimmed);
+        if (!isNaN(id)) {
+          searchByUserId(id);
+        }
+      }
+    },
+    [fetchPosts, searchByUserId],
+  );
 
   const handleRefresh = useCallback(() => {
-    loadPosts(true);
-  }, [loadPosts]);
-
-  const handleOpenComments = useCallback(
-    (post: PostEntity) => {
-      navigation.navigate('PostDetailScreen', { id: String(post.id) });
-    },
-    [navigation],
-  );
+    if (searchUserId.trim()) {
+      const id = Number(searchUserId.trim());
+      if (!isNaN(id)) {
+        searchByUserId(id);
+        return;
+      }
+    }
+    fetchPosts();
+  }, [fetchPosts, searchByUserId, searchUserId]);
 
   const renderPost = useCallback(
     ({ item }: ListRenderItemInfo<PostEntity>) => (
       <PostCard
         post={item}
-        onPressComments={() => handleOpenComments(item)}
+        onPressComments={() => onPressPost(item.id)}
       />
     ),
-    [handleOpenComments],
+    [onPressPost],
   );
 
   const emptyMessage = useMemo(() => {
@@ -133,37 +93,37 @@ export const PostManagementScreen = () => {
         </View>
       </View>
 
+      <View style={styles.searchWrapper}>
+        <View style={styles.searchContainer}>
+          <Image
+            source={searchIcon}
+            style={styles.searchIcon}
+            resizeMode="contain"
+          />
+          <TextInput
+            value={searchUserId}
+            onChangeText={handleSearchChange}
+            placeholder="Tìm kiếm theo user ID"
+            placeholderTextColor={COLORS.placeholder}
+            keyboardType="number-pad"
+            returnKeyType="search"
+            style={styles.searchInput}
+          />
+        </View>
+      </View>
+
       <FlatList
-        data={filteredPosts}
+        data={listPost}
         keyExtractor={item => String(item.id)}
         renderItem={renderPost}
         style={styles.list}
         contentContainerStyle={[
           styles.listContent,
-          filteredPosts.length === 0 && styles.emptyListContent,
+          listPost.length === 0 && styles.emptyListContent,
         ]}
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
         ItemSeparatorComponent={CardSeparator}
-        ListHeaderComponent={
-          <View style={styles.searchContainer}>
-            <Image
-              source={searchIcon}
-              style={styles.searchIcon}
-              resizeMode="contain"
-            />
-            <TextInput
-              value={searchUserId}
-              onChangeText={setSearchUserId}
-              placeholder="Tìm kiếm theo user ID"
-              placeholderTextColor={COLORS.placeholder}
-              keyboardType="number-pad"
-              returnKeyType="search"
-              style={styles.searchInput}
-            />
-          </View>
-        }
-        ListHeaderComponentStyle={styles.searchHeader}
         ListEmptyComponent={
           <View style={styles.stateContainer}>
             {loading && !error ? (
@@ -174,7 +134,7 @@ export const PostManagementScreen = () => {
         }
         refreshControl={
           <RefreshControl
-            refreshing={refreshing}
+            refreshing={loading}
             onRefresh={handleRefresh}
             tintColor={COLORS.primary}
             colors={[COLORS.primary]}
@@ -184,42 +144,6 @@ export const PostManagementScreen = () => {
     </View>
   );
 };
-
-const PostCard = React.memo(({ post, onPressComments }: PostCardProps) => {
-  return (
-    <View style={styles.card}>
-      <View style={styles.badge}>
-        <Text style={styles.badgeText}>USER {post.userId}</Text>
-      </View>
-
-      <Text style={styles.postTitle}>{post.title}</Text>
-
-      <Text style={styles.postBody} numberOfLines={3} ellipsizeMode="tail">
-        {post.body}
-      </Text>
-
-      <View style={styles.dividerWrap}>
-        <View style={styles.divider} />
-      </View>
-
-      <Pressable
-        onPress={onPressComments}
-        style={({ pressed }) => [
-          styles.commentsButton,
-          pressed && styles.pressed,
-        ]}
-        hitSlop={8}
-      >
-        <Image
-          source={commentIcon}
-          style={styles.commentIcon}
-          resizeMode="contain"
-        />
-        <Text style={styles.commentsText}>Comments</Text>
-      </Pressable>
-    </View>
-  );
-});
 
 const CardSeparator = () => <View style={styles.cardSeparator} />;
 
@@ -232,8 +156,6 @@ const COLORS = {
   text: '#191C1B',
   body: '#3D4A3D',
   placeholder: '#6B7280',
-  badge: '#D9E6DA',
-  badgeText: '#5B675E',
   shadow: '#000000',
 } as const;
 
@@ -275,9 +197,14 @@ const styles = StyleSheet.create({
     lineHeight: 28,
     fontWeight: '700',
   },
+  searchWrapper: {
+    paddingHorizontal: 16,
+    marginTop: -21,
+    marginBottom: 16,
+    zIndex: 1,
+  },
   list: {
     flex: 1,
-    marginTop: -24,
   },
   listContent: {
     paddingHorizontal: 16,
@@ -285,9 +212,6 @@ const styles = StyleSheet.create({
   },
   emptyListContent: {
     flexGrow: 1,
-  },
-  searchHeader: {
-    marginBottom: 24,
   },
   searchContainer: {
     height: 42,
@@ -318,74 +242,8 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     fontWeight: '400',
   },
-  card: {
-    width: '100%',
-    padding: 21,
-    gap: 12,
-    borderWidth: 1,
-    borderColor: COLORS.border,
-    borderRadius: 16,
-    backgroundColor: COLORS.white,
-    shadowColor: COLORS.shadow,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.04,
-    shadowRadius: 12,
-    elevation: 2,
-  },
   cardSeparator: {
     height: 16,
-  },
-  badge: {
-    alignSelf: 'flex-start',
-    paddingHorizontal: 12,
-    paddingVertical: 4,
-    borderRadius: 999,
-    backgroundColor: COLORS.badge,
-  },
-  badgeText: {
-    color: COLORS.badgeText,
-    fontSize: 11,
-    lineHeight: 16,
-    fontWeight: '600',
-  },
-  postTitle: {
-    color: COLORS.text,
-    fontSize: 18,
-    lineHeight: 24,
-    fontWeight: '700',
-  },
-  postBody: {
-    color: COLORS.body,
-    fontSize: 14,
-    lineHeight: 20,
-    fontWeight: '400',
-  },
-  dividerWrap: {
-    paddingVertical: 4,
-  },
-  divider: {
-    height: 1,
-    backgroundColor: COLORS.divider,
-  },
-  commentsButton: {
-    minHeight: 24,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 4,
-  },
-  pressed: {
-    opacity: 0.65,
-  },
-  commentIcon: {
-    width: 24,
-    height: 24,
-  },
-  commentsText: {
-    color: COLORS.shadow,
-    fontSize: 14,
-    lineHeight: 16,
-    fontWeight: '600',
   },
   stateContainer: {
     flex: 1,

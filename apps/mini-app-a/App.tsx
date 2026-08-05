@@ -10,6 +10,15 @@
  *  - Export a plain Stack.Navigator so Host App can nest it as a screen.
  */
 
+import { Provider } from 'react-redux';
 import AppContainer from './src/core/navigation/AppNavigation';
+import { store } from './src/core/store';
 
-export default AppContainer;
+const App = () => {
+    return (
+        <Provider store={store}>
+            <AppContainer />
+        </Provider>
+    );
+};
+export default App;

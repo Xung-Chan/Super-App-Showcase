@@ -3,9 +3,10 @@ import { api } from "@api/fetch"
 import { PostDetailRequest, PostDetailResponse } from "@post/data/dtos/PostDto"
 
 export const postApi = {
-    async getListPost(): Promise<PostDetailResponse[]> {
+    async getListPost(params?: { userId?: number }): Promise<PostDetailResponse[]> {
         return api.get<PostDetailResponse[]>(
-            ENDPOINTS.POSTS.LIST
+            ENDPOINTS.POSTS.LIST,
+            { params }
         )
     },
 
