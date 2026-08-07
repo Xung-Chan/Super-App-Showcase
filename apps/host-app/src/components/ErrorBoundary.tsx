@@ -1,59 +1,47 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type Props = {
     children: React.ReactNode;
-    name: string;
+    FallbackComponent?: React.ComponentType<any>;
+    onError?: (error: Error, info: React.ErrorInfo) => void;
 };
 
 type State = {
-    hasError: boolean;
+    error: Error | null;
 };
 
 class ErrorBoundary extends React.Component<Props, State> {
-    name: string;
 
     constructor(props: Props) {
         super(props);
-        this.name = props.name;
-        this.state = { hasError: false };
+        this.state = { error: null };
     }
 
-    static getDerivedStateFromError() {
-        return { hasError: true };
+    static getDerivedStateFromError(error: Error): State {
+        return { error };
     }
 
     componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-        console.log(error, errorInfo);
+        if (this.props.onError) {
+            this.props.onError(error, errorInfo);
+        }
     }
 
     render() {
-        if (this.state.hasError) {
-            return (
-                <SafeAreaProvider style={styles.container}>
-                    <Icon size={96} name="alert-octagon" />
-                    <Text style={styles.text}>{`Failed to load ${this.name}`}</Text>
-                </SafeAreaProvider>
-            );
+        const { error } = this.state;
+        const { FallbackComponent, children } = this.props;
+
+        // Nếu có lỗi, render giao diện báo lỗi (Fallback UI) và truyền hàm reset xuống
+        if (error !== null) {
+            if (FallbackComponent) {
+                return <FallbackComponent error={error} />;
+            }
+            return null;
         }
 
-        return this.props.children;
+        // Nếu không có lỗi, render UI bình thường (children)
+        return children;
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    text: {
-        fontSize: 24,
-        color: '#000000',
-        textAlign: 'center',
-    },
-});
 
 export default ErrorBoundary;
