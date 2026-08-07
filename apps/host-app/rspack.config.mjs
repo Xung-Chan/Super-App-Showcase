@@ -48,10 +48,13 @@ export default Repack.defineRspackConfig((env) => ({
     new Repack.plugins.ModuleFederationPluginV2({
       name: 'host_app',
       dts: false,
-      remotes: {
-        mini_app_a: `mini_app_a@http://localhost:${mini_app_a_port}/${env.platform}/mf-manifest.json`,
-        mini_app_b: `mini_app_b@http://localhost:${mini_app_b_port}/${env.platform}/mf-manifest.json`,
-      },
+      // remotes: {
+      //   mini_app_a: `mini_app_a@http://localhost:${mini_app_a_port}/${env.platform}/mf-manifest.json`,
+      //   mini_app_b: `mini_app_b@http://localhost:${mini_app_b_port}/${env.platform}/mf-manifest.json`,
+      // },
+      // remotes: {
+      //   mini_app_a: `mini_app_a@dynamic`,
+      // },
       shared: getSharedDependencies({ eager: true })
     }),
   ],

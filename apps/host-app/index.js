@@ -13,6 +13,12 @@ import App from './src/App';
 import { name as appName } from './app.json';
 
 ScriptManager.shared.addResolver(async (scriptId, caller) => {
+  console.log("scriptId: ", scriptId)
+  console.log("caller: ", caller)
+  if (scriptId === 'mini_app_a' || caller === 'mini_app_a') {
+    return;
+  }
+
   if (__DEV__) {
     return {
       url: Script.getDevServerURL(scriptId),
