@@ -21,9 +21,11 @@ export function MiniAppScreenA({
   );
 }
 
-const FederatedMiniAppA = React.lazy(() =>
-  Federated.importModule('mini_app_a', './App')
-);
+// const FederatedMiniAppA = React.lazy(() =>
+//   Federated.importModule('mini_app_a', './App')
+// );
+
+const FederatedMiniAppA = React.lazy(() => import('mini_app_a/App'));
 
 
 function MiniAppErrorFallback() {

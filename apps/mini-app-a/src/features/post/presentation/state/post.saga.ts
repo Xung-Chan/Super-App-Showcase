@@ -7,7 +7,7 @@ function* getListPostSaga(_action: ReturnType<typeof getListPostRequested>): Gen
         const response = yield call(postApi.getListPost)
         yield put(getListPostSuccess(response))
     } catch (error: any) {
-        yield put(getListPostFailure(error ?? "Get Post Failed"))
+        yield put(getListPostFailure(error?.message ?? "Get Post Failed"))
     }
 }
 function* filterByUserIdSaga(action: ReturnType<typeof filterByUserId>): Generator<any, void, any> {
@@ -15,7 +15,7 @@ function* filterByUserIdSaga(action: ReturnType<typeof filterByUserId>): Generat
         const response = yield call(postApi.getListPost, { userId: action.payload.userId })
         yield put(getListPostSuccess(response))
     } catch (error: any) {
-        yield put(getListPostFailure(error ?? "Get Post Failed"))
+        yield put(getListPostFailure(error?.message ?? "Get Post Failed"))
     }
 }
 
@@ -24,7 +24,7 @@ function* getCommentsRequestedSaga(action: ReturnType<typeof getCommentsRequeste
         const response = yield call(postApi.getCommentByPost, { postId: action.payload.postId })
         yield put(getCommentsSuccess(response))
     } catch (error: any) {
-        yield put(getCommentsFailure(error ?? "Get Comment Failed"))
+        yield put(getCommentsFailure(error?.message ?? "Get Comment Failed"))
     }
 }
 
@@ -33,7 +33,7 @@ function* createCommentsRequestedSaga(action: ReturnType<typeof createCommentReq
         const response = yield call(postApi.createComment, action.payload)
         yield put(createCommentSuccess(response))
     } catch (error: any) {
-        yield put(createCommentFailure(error ?? "Get Comment Failed"))
+        yield put(createCommentFailure(error?.message ?? "Get Comment Failed"))
     }
 }
 
@@ -42,7 +42,7 @@ function* getPostDetailRequestedSaga(action: ReturnType<typeof getPostDetailRequ
         const response = yield call(postApi.getPostDetail, { id: action.payload.id })
         yield put(getPostDetailSuccess(response))
     } catch (error: any) {
-        yield put(getPostDetailFailure(error ?? "Get Post Detail Failed"))
+        yield put(getPostDetailFailure(error?.message ?? "Get Post Detail Failed"))
     }
 }
 
