@@ -12,17 +12,14 @@
   ],
   "scripts": {
     "dev": "turbo run start --parallel --continue",
-    "dev:fresh": "npx kill-port 8081 8082 8083 && turbo run start --parallel --continue",
-    "kill-ports": "npx kill-port 8081 8082 8083",
     "dev:host": "yarn workspace host_app start",
     "dev:mini-a": "yarn workspace mini_app_a start",
     "dev:mini-b": "yarn workspace mini_app_b start",
+    "build:android":"yarn workspace host_app run android",
     "build": "turbo run build",
     "start": "turbo run start",
     "lint": "turbo run lint",
     "clean": "turbo run clean",
-    "clean:all": "cmd /c \"rd /s /q node_modules 2>nul & rd /s /q apps\\host-app\\node_modules 2>nul & rd /s /q apps\\mini-app-a\\node_modules 2>nul & rd /s /q apps\\mini-app-b\\node_modules 2>nul & rd /s /q packages\\shared-ui\\node_modules 2>nul & rd /s /q packages\\shared-deps\\node_modules 2>nul & rd /s /q .turbo 2>nul & echo Cleaned all node_modules and .turbo\"",
-    "clean:fresh": "yarn clean:all && yarn install",
     "format": "prettier --write \"**/*.{js,ts,tsx,json}\""
   },
   "devDependencies": {

@@ -1706,13 +1706,13 @@ __metadata:
   linkType: hard
 
 "@fastify/ajv-compiler@npm:^4.0.5":
-  version: 4.0.5
-  resolution: "@fastify/ajv-compiler@npm:4.0.5"
+  version: 4.0.6
+  resolution: "@fastify/ajv-compiler@npm:4.0.6"
   dependencies:
     ajv: "npm:^8.12.0"
     ajv-formats: "npm:^3.0.1"
-    fast-uri: "npm:^3.0.0"
-  checksum: 10c0/b701602c5fad35d1327a6ebda530ca5ba2c7728223cd214b2b24af7cb2522c864b6cbbe77335ddd6a55d03f76899fb009386da783121b7ece136feb7ea937e13
+    fast-uri: "npm:^4.0.0"
+  checksum: 10c0/dfaa02348b07b2d245c2092ab96d606befe729710692852087287275eb2c67fa24eeb5561447cd16a91ec30c7ccbcb0df6c89bed63c09718c92cdfc7a322ce4b
   languageName: node
   linkType: hard
 
@@ -1824,17 +1824,17 @@ __metadata:
   linkType: hard
 
 "@fastify/sensible@npm:^6.0.0":
-  version: 6.0.4
-  resolution: "@fastify/sensible@npm:6.0.4"
+  version: 6.0.5
+  resolution: "@fastify/sensible@npm:6.0.5"
   dependencies:
     "@lukeed/ms": "npm:^2.0.2"
     dequal: "npm:^2.0.3"
-    fastify-plugin: "npm:^5.0.0"
+    fastify-plugin: "npm:^6.0.0"
     forwarded: "npm:^0.2.0"
     http-errors: "npm:^2.0.0"
     type-is: "npm:^2.0.1"
     vary: "npm:^1.1.2"
-  checksum: 10c0/036373f35c462a37557201f75c10dea22e9583922987a2cff5062a26307d18359b48a6fb43c35965e9c857924a17f9d0ef60bbc86ddff98f6df7d6f8552cb8b5
+  checksum: 10c0/ae61d3c6ac7bf1a98d96f731a38203649893322a556e88db813e1a861374f98fc83be6cafa7e7a3950a9b1865e5850b2a5ae72efe54a1d3328f50288c4aea6d8
   languageName: node
   linkType: hard
 
@@ -3304,9 +3304,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-navigation/core@npm:^7.21.11":
-  version: 7.21.11
-  resolution: "@react-navigation/core@npm:7.21.11"
+"@react-navigation/core@npm:^7.21.12":
+  version: 7.21.12
+  resolution: "@react-navigation/core@npm:7.21.12"
   dependencies:
     "@react-navigation/routers": "npm:^7.6.4"
     escape-string-regexp: "npm:^4.0.0"
@@ -3318,53 +3318,53 @@ __metadata:
     use-sync-external-store: "npm:^1.5.0"
   peerDependencies:
     react: ">= 18.2.0"
-  checksum: 10c0/869eed45689e6acd752c863e06fc97f7117d2257d069812c82fccdf9d69bc72ea057d412860f4e2a6fee360754e3575503480c6e510491fd0b02769b1d194075
+  checksum: 10c0/2e05ff5f251f64e172fccc2d80e7c76b6249c8fe0198f3013045c27c76bac1813b1c676d659df8002673e196a8d4f9d91ab8af5df76873c55494e45a033dcc98
   languageName: node
   linkType: hard
 
-"@react-navigation/elements@npm:^2.9.37":
-  version: 2.9.37
-  resolution: "@react-navigation/elements@npm:2.9.37"
+"@react-navigation/elements@npm:^2.9.38":
+  version: 2.9.38
+  resolution: "@react-navigation/elements@npm:2.9.38"
   dependencies:
     color: "npm:^4.2.3"
     use-latest-callback: "npm:^0.2.4"
     use-sync-external-store: "npm:^1.5.0"
   peerDependencies:
     "@react-native-masked-view/masked-view": ">= 0.2.0"
-    "@react-navigation/native": ^7.3.15
+    "@react-navigation/native": ^7.3.16
     react: ">= 18.2.0"
     react-native: "*"
     react-native-safe-area-context: ">= 4.0.0"
   peerDependenciesMeta:
     "@react-native-masked-view/masked-view":
       optional: true
-  checksum: 10c0/a467389ddc2ccb077afd8ba36635778ff0f982c3d284112ba36294adc93d24d7aba2a2700cfdfe9d052de339c4abf5caf232ea738088a9ea38ebd7662d220df1
+  checksum: 10c0/8aad1be751f0d4071205ce905f8e6794d9467cae83f4102a622949ec43b79d367825cfe81da20294d5c1a707d91b8128eed8b6b320a4ad93c88db28fbeb5e560
   languageName: node
   linkType: hard
 
 "@react-navigation/native-stack@npm:^7.18.6":
-  version: 7.18.7
-  resolution: "@react-navigation/native-stack@npm:7.18.7"
+  version: 7.18.8
+  resolution: "@react-navigation/native-stack@npm:7.18.8"
   dependencies:
-    "@react-navigation/elements": "npm:^2.9.37"
+    "@react-navigation/elements": "npm:^2.9.38"
     color: "npm:^4.2.3"
     sf-symbols-typescript: "npm:^2.1.0"
     warn-once: "npm:^0.1.1"
   peerDependencies:
-    "@react-navigation/native": ^7.3.15
+    "@react-navigation/native": ^7.3.16
     react: ">= 18.2.0"
     react-native: "*"
     react-native-safe-area-context: ">= 4.0.0"
     react-native-screens: ">= 4.0.0"
-  checksum: 10c0/75dfbeec8e71a279c64c084f8d9bf3f6444b9bb208f8a04608f870a25ba2d2f2e367fca59e8a5d774aaccda9944125c23fc265b76af0abd087335cf0132d906b
+  checksum: 10c0/f9265453b752fd5e620d51268a9480133c56a8d11f95d125bb1c18c65de78bc6a6289e144ef634649bd61ee9a8d394e4ac6b12292603d5d8a9cf655b19e69179
   languageName: node
   linkType: hard
 
 "@react-navigation/native@npm:^7.3.14":
-  version: 7.3.15
-  resolution: "@react-navigation/native@npm:7.3.15"
+  version: 7.3.16
+  resolution: "@react-navigation/native@npm:7.3.16"
   dependencies:
-    "@react-navigation/core": "npm:^7.21.11"
+    "@react-navigation/core": "npm:^7.21.12"
     escape-string-regexp: "npm:^4.0.0"
     fast-deep-equal: "npm:^3.1.3"
     nanoid: "npm:^3.3.11"
@@ -3373,7 +3373,7 @@ __metadata:
   peerDependencies:
     react: ">= 18.2.0"
     react-native: "*"
-  checksum: 10c0/671c30899aab6829664cd53ce3abdca4a5216fad7cad897fad467ce340e2126c4d3685c5f0766bfb37a9654dac38d9bd2fdf5ce6fa084b0aa75cbd33924d93ec
+  checksum: 10c0/86193e9ee0b2e64e9148691b268b2a9e9769ac62ad58a281f09db79da171232d4bee736f67df97d6d1159909a96bf07c84de9bf8ddb346affb01b80e9cb8f8cd
   languageName: node
   linkType: hard
 
@@ -3836,11 +3836,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 26.1.2
-  resolution: "@types/node@npm:26.1.2"
+  version: 26.2.0
+  resolution: "@types/node@npm:26.2.0"
   dependencies:
     undici-types: "npm:~8.3.0"
-  checksum: 10c0/a45503222c7db8f374afd5c9381db63dd95b6b1f703abea0890dd3d4a09eeb41da489e08a1a45baf18fe89fb77fbf310ff2789f680c490b04dafc41a60800a86
+  checksum: 10c0/f8566d88162241eb55a46f7e4ea097188eab0aaafefea7a58e63adab8c4144eb98c08b7911452c846104c339a0f82282f5e1ed4b26b578d60709614fe2843f4d
   languageName: node
   linkType: hard
 
@@ -4724,12 +4724,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"baseline-browser-mapping@npm:^2.10.44":
-  version: 2.11.12
-  resolution: "baseline-browser-mapping@npm:2.11.12"
+"baseline-browser-mapping@npm:^2.11.12":
+  version: 2.11.13
+  resolution: "baseline-browser-mapping@npm:2.11.13"
   bin:
     baseline-browser-mapping: dist/cli.cjs
-  checksum: 10c0/1f4b38379784aba3681b06c304e361c9f03ed6c51205a50c9dd3b5ea87b0e203e6f580384e778374999b000e1b0a0d7351552983aab024d9c4b81b91879c8287
+  checksum: 10c0/a02511614ebe0311d4831e7ba11e88e5997d5bf0733e5eadd7d97b4bb69d76f468a982862108cb90721e1a41f4ef36c1a5f9fa18569923702ad2875ca3abfe58
   languageName: node
   linkType: hard
 
@@ -4809,17 +4809,17 @@ __metadata:
   linkType: hard
 
 "browserslist@npm:^4.24.0, browserslist@npm:^4.28.7":
-  version: 4.28.7
-  resolution: "browserslist@npm:4.28.7"
+  version: 4.28.8
+  resolution: "browserslist@npm:4.28.8"
   dependencies:
-    baseline-browser-mapping: "npm:^2.10.44"
-    caniuse-lite: "npm:^1.0.30001806"
-    electron-to-chromium: "npm:^1.5.393"
-    node-releases: "npm:^2.0.51"
-    update-browserslist-db: "npm:^1.2.3"
+    baseline-browser-mapping: "npm:^2.11.12"
+    caniuse-lite: "npm:^1.0.30001809"
+    electron-to-chromium: "npm:^1.5.402"
+    node-releases: "npm:^2.0.53"
+    update-browserslist-db: "npm:^1.3.0"
   bin:
     browserslist: cli.js
-  checksum: 10c0/dc41922a9ff0d81e5492498bdab2d932e3a3222f4277814ba38ee64f4e51f26e5244a7cce0777b4cac3ceff6eb196f5cadbb2a832620973a7f9c39611f6bc78e
+  checksum: 10c0/047dd517c8d1f1f56a253d752c3127b8ad01c58e4cbb7e21cb5cd07ebd13e083a2237c3afb13eb60674282c9132bd4534aea2c3ff7c6f7d29be0687a00cbd537
   languageName: node
   linkType: hard
 
@@ -4925,10 +4925,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"caniuse-lite@npm:^1.0.30001806":
-  version: 1.0.30001807
-  resolution: "caniuse-lite@npm:1.0.30001807"
-  checksum: 10c0/1b338af06427772624dd323d2da51007f2e8574c043fa9790e0e6bff153f188dd74e1ee1b6ddaf5f3be19ec7cb6115bee434c02e36424dee406ae60aeeb97993
+"caniuse-lite@npm:^1.0.30001809":
+  version: 1.0.30001809
+  resolution: "caniuse-lite@npm:1.0.30001809"
+  checksum: 10c0/cac2ed4e66cc6c4cbf126b94d2c02012566eb92f93c89949290f99edcd2bdc4ed1290b5c537ccb9b42c773936a479ed468e5d4e9b8938b126a0947090e42e008
   languageName: node
   linkType: hard
 
@@ -5626,10 +5626,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"electron-to-chromium@npm:^1.5.393":
-  version: 1.5.402
-  resolution: "electron-to-chromium@npm:1.5.402"
-  checksum: 10c0/829b26ad37dcbbffb1b0cdcd7eec3d24d3a82412c3d5452dd6ee8f144bb254d2287090fed6b9cd91d366d4ef9ff1a19aad2363a1be60a37ea49e55c735ade624
+"electron-to-chromium@npm:^1.5.402":
+  version: 1.5.403
+  resolution: "electron-to-chromium@npm:1.5.403"
+  checksum: 10c0/42a49260a162bb08f29b6c4dcf3e5970327efeeece14248450d66175b5197dc92145a20e2e239840bcbc848cbbeddae04248d9525abb3466e6fdfd889a48d06d
   languageName: node
   linkType: hard
 
@@ -6349,7 +6349,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-uri@npm:^3.0.0, fast-uri@npm:^3.0.1":
+"fast-uri@npm:^3.0.1":
   version: 3.1.5
   resolution: "fast-uri@npm:3.1.5"
   checksum: 10c0/2bf60eb800dd610c65e17be436425dcb21c92aff3a87d442a8bccab0b7b071e88cf1a5d7d1ea946370b937e6fc0375c405c0296c10587e57de4f78be4646d1d0
@@ -6438,8 +6438,8 @@ __metadata:
   linkType: hard
 
 "fastify@npm:^5.10.0":
-  version: 5.11.2
-  resolution: "fastify@npm:5.11.2"
+  version: 5.11.3
+  resolution: "fastify@npm:5.11.3"
   dependencies:
     "@fastify/ajv-compiler": "npm:^4.0.5"
     "@fastify/error": "npm:^4.0.0"
@@ -6456,7 +6456,7 @@ __metadata:
     secure-json-parse: "npm:^4.0.0"
     semver: "npm:^7.6.0"
     toad-cache: "npm:^3.7.0"
-  checksum: 10c0/c4ac0c186c2b451ef74feca49380893b93770bfbacaf02b7fdcde15e0b767d9080645ec80cbe730f25e23cb8f34bfcc6cee4578e68d385d5da65a55732b1b7b4
+  checksum: 10c0/a48aeb99e3dd5fe932400d5610f7cf7d4b3c9915f231090a598d469564e21c7fe0513e8e49bbc713a2a9e8f882960bfea295c30f7af61feb32b1f9a7277c16d1
   languageName: node
   linkType: hard
 
@@ -9349,11 +9349,11 @@ __metadata:
   linkType: hard
 
 "nanoid@npm:^3.3.11":
-  version: 3.3.17
-  resolution: "nanoid@npm:3.3.17"
+  version: 3.3.18
+  resolution: "nanoid@npm:3.3.18"
   bin:
     nanoid: bin/nanoid.cjs
-  checksum: 10c0/06f7949c7cce5c92c6aea66022f29a1eae7f56e05acbfddf1e049e819b4bf234c44a765cc44da7163482b111677948514012e27acdfa56f95309295768bdae32
+  checksum: 10c0/b994b4e396730f8be2520923284e2040d61eaee55cc6d4935ef6d38d34bafdc46133eda4d3faea5073bda545aa6079d82b886caeac5c731cf9ac18bcc1301425
   languageName: node
   linkType: hard
 
@@ -9452,7 +9452,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-releases@npm:^2.0.51":
+"node-releases@npm:^2.0.53":
   version: 2.0.53
   resolution: "node-releases@npm:2.0.53"
   checksum: 10c0/db9fb29b21ec12e223ead8bd9406100ff14fce01678a9a4865e288098456b84869431421a739f216aa520b6f57d9425f6537662501ae8a2d9e1771bfa87751bc
@@ -10297,15 +10297,15 @@ __metadata:
   linkType: hard
 
 "react-native-screens@npm:^4.26.2":
-  version: 4.26.2
-  resolution: "react-native-screens@npm:4.26.2"
+  version: 4.27.0
+  resolution: "react-native-screens@npm:4.27.0"
   dependencies:
     react-freeze: "npm:^1.0.0"
     warn-once: "npm:^0.1.0"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 10c0/3cdc702d8e21c63331e306a2b971307d5d9e13df52d94f435c5bb8d5dcf09fed00f4ef788e85ba87fae1ba5b155f4cdc2ee177a70f1f512adff73f94eef844d1
+  checksum: 10c0/357674b881189ff8933f457acadbfc3030a376d0ccdfb4b6005462aabbf38287d4d0f39a301cb94c45df6c2e09be28bcfc4d71298c8d34b8ac87ebe639e46ff9
   languageName: node
   linkType: hard
 
@@ -11960,7 +11960,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"update-browserslist-db@npm:^1.2.3":
+"update-browserslist-db@npm:^1.3.0":
   version: 1.3.0
   resolution: "update-browserslist-db@npm:1.3.0"
   dependencies:
@@ -12290,8 +12290,8 @@ __metadata:
   linkType: hard
 
 "ws@npm:^8.21.1, ws@npm:^8.7.0":
-  version: 8.21.2
-  resolution: "ws@npm:8.21.2"
+  version: 8.21.3
+  resolution: "ws@npm:8.21.3"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ">=5.0.2"
@@ -12300,7 +12300,7 @@ __metadata:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: 10c0/82d687bbfbccce04e91266ff9911b27c67ca622fd8fbacc6a64d467a43fbd7ecaa3ef6d820b315c060682f901463f57cac01a02b00c4379f49c747ec7da83169
+  checksum: 10c0/7b28dc2863ea0e2cece68d142a3eee90361021b73f750431e6d8076bb7dede5fdfdb75b3d29534b62f411261147b76b1bc80fb5cc63ab0aabd467280e85b22e0
   languageName: node
   linkType: hard
 

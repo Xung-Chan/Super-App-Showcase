@@ -1,8 +1,9 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import type { ListRenderItemInfo } from 'react-native';
 import {
   ActivityIndicator,
   FlatList,
+  Keyboard,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -11,6 +12,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useRoute } from '@react-navigation/native';
 
 import type { RouteProp } from '@react-navigation/native';
@@ -22,26 +24,66 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type PostDetailRoute = RouteProp<RootStackParamList, 'PostDetailScreen'>;
 
-
 export const PostDetailScreen = () => {
   const route = useRoute<PostDetailRoute>();
   const { id } = route.params;
+  const insets = useSafeAreaInsets();
+  const inputRef = useRef<TextInput>(null);
 
   const { listComment, loading, error, post, handleCreateComment } = usePostDetailVM(Number(id));
   const [commentText, setCommentText] = useState('');
+  const [replyingTo, setReplyingTo] = useState<CommentEntity | null>(null);
+  const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const showSub = Keyboard.addListener(
+      Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow',
+      () => setKeyboardVisible(true),
+    );
+    const hideSub = Keyboard.addListener(
+      Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
+      () => setKeyboardVisible(false),
+    );
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, []);
+
+  const handleReplyComment = useCallback((comment: CommentEntity) => {
+    setReplyingTo(comment);
+    inputRef.current?.focus();
+  }, []);
+
+  const handleCancelReply = useCallback(() => {
+    setReplyingTo(null);
+  }, []);
+
+  const handleFocusCommentInput = useCallback(() => {
+    inputRef.current?.focus();
+  }, []);
 
   const handleSendComment = useCallback(() => {
     if (commentText.trim()) {
-      handleCreateComment(commentText.trim());
+      const textToSend = replyingTo
+        ? `@${replyingTo.name} ${commentText.trim()}`
+        : commentText.trim();
+      handleCreateComment(textToSend);
       setCommentText('');
+      setReplyingTo(null);
+      Keyboard.dismiss();
     }
-  }, [commentText, handleCreateComment]);
+  }, [commentText, replyingTo, handleCreateComment]);
 
   const renderComment = useCallback(
     ({ item }: ListRenderItemInfo<CommentEntity>) => (
-      <CommentCard comment={item} />
+      <CommentCard
+        comment={item}
+        onReply={handleReplyComment}
+        onPress={handleReplyComment}
+      />
     ),
-    [],
+    [handleReplyComment],
   );
 
   const renderArticleSection = () => {
@@ -74,7 +116,7 @@ export const PostDetailScreen = () => {
   return (
     <KeyboardAvoidingView
       style={styles.screen}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       keyboardVerticalOffset={0}
     >
       <MiniAppHeader title="Chi tiết bài viết" backgroundColor={COLORS.primary} />
@@ -115,12 +157,16 @@ export const PostDetailScreen = () => {
             {/* Comments section heading */}
             {!loading && !error && post && (
               <View style={styles.commentsSection}>
-                <View style={styles.commentsHeading}>
+                <Pressable
+                  style={styles.commentsHeading}
+                  onPress={handleFocusCommentInput}
+                  hitSlop={8}
+                >
                   <Icon name="comment-outline" size={18} color={COLORS.text} />
                   <Text style={styles.commentsTitle}>
                     Bình luận ({listComment.length})
                   </Text>
-                </View>
+                </Pressable>
               </View>
             )}
           </>
@@ -129,33 +175,64 @@ export const PostDetailScreen = () => {
       />
 
       {/* ── Sticky Bottom Comment Input ──────────────────────────────────── */}
-      <View style={styles.bottomBar}>
-        {/* Current user avatar */}
-        <View style={styles.myAvatar}>
-          <Text style={styles.myAvatarText}>ME</Text>
-        </View>
+      <View
+        style={[
+          styles.bottomBarContainer,
+          {
+            paddingBottom: isKeyboardVisible
+              ? 12
+              : Math.max(insets.bottom, 16),
+          },
+        ]}
+      >
+        {/* Replying banner indicator */}
+        {replyingTo && (
+          <View style={styles.replyBanner}>
+            <View style={styles.replyBannerContent}>
+              <Icon name="reply" size={14} color={COLORS.primary} />
+              <Text style={styles.replyBannerText} numberOfLines={1}>
+                Đang trả lời <Text style={styles.replyBannerName}>{replyingTo.name}</Text>
+              </Text>
+            </View>
+            <Pressable
+              onPress={handleCancelReply}
+              style={({ pressed }) => [pressed && styles.pressed]}
+              hitSlop={8}
+            >
+              <Icon name="close-circle" size={18} color={COLORS.badgeText} />
+            </Pressable>
+          </View>
+        )}
 
-        {/* Input wrapper */}
-        <View style={styles.inputWrapper}>
-          <TextInput
-            value={commentText}
-            onChangeText={setCommentText}
-            placeholder="Viết bình luận..."
-            placeholderTextColor={COLORS.body}
-            style={styles.input}
-            returnKeyType="send"
-            onSubmitEditing={handleSendComment}
-          />
-          <Pressable
-            onPress={handleSendComment}
-            style={({ pressed }) => [
-              styles.sendButton,
-              pressed && styles.pressed,
-            ]}
-            hitSlop={8}
-          >
-            <Icon name="send" size={20} color={COLORS.primary} />
-          </Pressable>
+        <View style={styles.bottomBar}>
+          {/* Current user avatar */}
+          <View style={styles.myAvatar}>
+            <Text style={styles.myAvatarText}>ME</Text>
+          </View>
+
+          {/* Input wrapper */}
+          <View style={styles.inputWrapper}>
+            <TextInput
+              ref={inputRef}
+              value={commentText}
+              onChangeText={setCommentText}
+              placeholder={replyingTo ? `Trả lời ${replyingTo.name}...` : 'Viết bình luận...'}
+              placeholderTextColor={COLORS.body}
+              style={styles.input}
+              returnKeyType="send"
+              onSubmitEditing={handleSendComment}
+            />
+            <Pressable
+              onPress={handleSendComment}
+              style={({ pressed }) => [
+                styles.sendButton,
+                pressed && styles.pressed,
+              ]}
+              hitSlop={8}
+            >
+              <Icon name="send-outline" size={20} color={COLORS.primary} />
+            </Pressable>
+          </View>
         </View>
       </View>
     </KeyboardAvoidingView>
@@ -173,12 +250,21 @@ const getInitials = (name: string) => {
   return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
 };
 
-const CommentCard = React.memo(({ comment }: { comment: CommentEntity }) => {
+interface CommentCardProps {
+  comment: CommentEntity;
+  onReply?: (comment: CommentEntity) => void;
+  onPress?: (comment: CommentEntity) => void;
+}
+
+const CommentCard = React.memo(({ comment, onReply, onPress }: CommentCardProps) => {
   const [liked, setLiked] = useState(false);
   const initials = getInitials(comment.name);
 
   return (
-    <View style={styles.commentRow}>
+    <Pressable
+      style={styles.commentRow}
+      onPress={() => onPress?.(comment)}
+    >
       {/* Avatar (paddingTop aligns it with bubble top) */}
       <View style={styles.commentAvatarWrapper}>
         <View style={styles.commentAvatar}>
@@ -219,6 +305,7 @@ const CommentCard = React.memo(({ comment }: { comment: CommentEntity }) => {
           </Pressable>
 
           <Pressable
+            onPress={() => onReply?.(comment)}
             style={({ pressed }) => [pressed && styles.pressed]}
             hitSlop={8}
           >
@@ -226,7 +313,7 @@ const CommentCard = React.memo(({ comment }: { comment: CommentEntity }) => {
           </Pressable>
         </View>
       </View>
-    </View>
+    </Pressable>
   );
 });
 
@@ -340,7 +427,7 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingHorizontal: 16,
-    paddingBottom: 96,
+    paddingBottom: 24,
   },
 
   // ── Title card (floating pill below header) ──────────────────────────────
@@ -514,21 +601,49 @@ const styles = StyleSheet.create({
   },
 
   // ── Bottom bar ──────────────────────────────────────────────────────────
-  bottomBar: {
+  bottomBarContainer: {
     backgroundColor: COLORS.white,
     borderTopWidth: 1,
     borderTopColor: COLORS.border,
-    paddingHorizontal: 16,
-    paddingTop: 17,
-    paddingBottom: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
     shadowColor: COLORS.shadow,
     shadowOffset: { width: 0, height: -4 },
     shadowOpacity: 0.05,
     shadowRadius: 6,
     elevation: 8,
+  },
+  replyBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingTop: 8,
+    paddingBottom: 6,
+    backgroundColor: COLORS.screen,
+    borderBottomWidth: 1,
+    borderBottomColor: COLORS.border,
+  },
+  replyBannerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    flex: 1,
+    marginRight: 8,
+  },
+  replyBannerText: {
+    fontSize: 12,
+    color: COLORS.body,
+    flex: 1,
+  },
+  replyBannerName: {
+    fontWeight: '700',
+    color: COLORS.primary,
+  },
+  bottomBar: {
+    paddingHorizontal: 16,
+    paddingTop: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
   },
   myAvatar: {
     width: 40,
@@ -549,6 +664,7 @@ const styles = StyleSheet.create({
   inputWrapper: {
     flex: 1,
     position: 'relative',
+    justifyContent: 'center',
   },
   input: {
     backgroundColor: COLORS.inputBg,
@@ -556,19 +672,18 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: COLORS.inputBorder,
     paddingLeft: 17,
-    paddingRight: 49,
-    paddingVertical: 14,
+    paddingRight: 46,
+    paddingVertical: Platform.OS === 'ios' ? 12 : 8,
+    minHeight: 44,
     color: COLORS.text,
     fontSize: 14,
-    lineHeight: 20,
     fontWeight: '400',
   },
   sendButton: {
     position: 'absolute',
-    right: 8,
-    top: 0,
-    bottom: 0,
-    width: 35,
+    right: 6,
+    width: 36,
+    height: 36,
     alignItems: 'center',
     justifyContent: 'center',
   },
