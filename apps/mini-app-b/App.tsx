@@ -1,8 +1,12 @@
-
-import { StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { startEkyc } from '@superapp/ekyc-core';
 import {
-  SafeAreaProvider,
-} from 'react-native-safe-area-context';
+  Button,
+  StatusBar,
+  StyleSheet,
+  useColorScheme,
+  View,
+} from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
@@ -16,17 +20,24 @@ function App() {
 }
 
 function AppContent() {
+  const handleStartEkyc = async () => {
+    const result = await startEkyc();
+    console.log(result);
+  };
   return (
     <View style={styles.container}>
-      <Text> This is Mini App B</Text>
-    </View >
+      <Button onPress={handleStartEkyc} title="Start eKYC" />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 50
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 16,
+    padding: 24,
   },
 });
 

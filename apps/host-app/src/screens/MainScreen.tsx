@@ -1,7 +1,15 @@
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { Alert, Button, StatusBar, StyleSheet, Text, useColorScheme, View } from "react-native";
-import { RootStackParamList } from "../navigation/navigation-type";
-import NativeEkycCore from "@superapp/ekyc-core/src/NativeEkycCore";
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import {
+  Alert,
+  Button,
+  StatusBar,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  View,
+} from 'react-native';
+import { RootStackParamList } from '../navigation/navigation-type';
+import NativeEkycCore from '@superapp/ekyc-core/src/NativeEkycCore';
 
 export function HomeScreen({
   navigation,
@@ -9,16 +17,15 @@ export function HomeScreen({
   const isDarkMode = useColorScheme() === 'dark';
   const handleStartEkyc = async () => {
     try {
-      console.log("Starting eKYC...");
-      const result = await NativeEkycCore.startEkyc()
-        ;
-      console.log("eKYC result:", result);
-      Alert.alert("Success", `eKYC completed: ${result}`);
+      console.log('Starting eKYC...');
+      const result = await NativeEkycCore.startEkyc();
+      console.log('eKYC result:', result);
+      Alert.alert('Success', `eKYC completed: ${result}`);
     } catch (error: any) {
-      console.error("eKYC error:", error);
+      console.error('eKYC error:', error);
       Alert.alert(
-        "Error",
-        error.message || "Failed to start eKYC. Please try again."
+        'Error',
+        error.message || 'Failed to start eKYC. Please try again.',
       );
     }
   };
@@ -34,8 +41,12 @@ export function HomeScreen({
           onPress={() => navigation.navigate('MiniAppA')}
         />
         <Button
-          title="Start eKYC Register"
+          title="Start eKYC Register on Host App"
           onPress={handleStartEkyc}
+        />
+        <Button
+          title="Open eKYC Mini App"
+          onPress={() => navigation.navigate('MiniAppB')}
         />
       </View>
     </>

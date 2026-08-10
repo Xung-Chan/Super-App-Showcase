@@ -18,6 +18,9 @@ ScriptManager.shared.addResolver(async (scriptId, caller) => {
   if (scriptId === 'mini_app_a' || caller === 'mini_app_a') {
     return;
   }
+  if (scriptId === 'mini_app_b' || caller === 'mini_app_b') {
+    return;
+  }
 
   if (__DEV__) {
     return {
