@@ -1,4 +1,4 @@
-import EkycCore from './NativeEkycCore';
+import EkycCore from "./NativeEkycCore";
 
 export function startEkyc(): Promise<string> {
   return EkycCore.startEkyc();
