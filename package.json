@@ -15,7 +15,7 @@
     "dev:host": "yarn workspace host_app start",
     "dev:mini-a": "yarn workspace mini_app_a start",
     "dev:mini-b": "yarn workspace mini_app_b start",
-    "build:android":"yarn workspace host_app run android",
+    "build:android": "yarn workspace host_app run android",
     "build": "turbo run build",
     "start": "turbo run start",
     "lint": "turbo run lint",
@@ -26,8 +26,5 @@
     "prettier": "^3.0.0",
     "turbo": "2.7.5"
   },
-  "packageManager": "yarn@4.11.0",
-  "dependencies": {
-    "@react-native-masked-view/masked-view": "^0.3.2"
-  }
+  "packageManager": "yarn@4.11.0"
 }
