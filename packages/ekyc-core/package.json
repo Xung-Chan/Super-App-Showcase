@@ -1,0 +1,28 @@
+{
+  "name": "@superapp/ekyc-core",
+  "version": "0.0.0",
+  "description": "comming soon",
+  "main": "src/index",
+  "codegenConfig": {
+    "name": "EkycCoreSpec",
+    "type": "modules",
+    "jsSrcsDir": "src",
+    "android": {
+      "javaPackageName": "com.ekyccore"
+    }
+  },
+  "author": " <> ()",
+  "license": "UNLICENSED",
+  "homepage": "#readme",
+  "create-react-native-library": {
+    "type": "turbo-module",
+    "languages": "kotlin-objc",
+    "tools": [
+      "eslint",
+      "jest",
+      "lefthook",
+      "release-it"
+    ],
+    "version": "0.63.0"
+  }
+}

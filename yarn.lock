@@ -3680,6 +3680,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@superapp/ekyc-core@workspace:*, @superapp/ekyc-core@workspace:packages/ekyc-core":
+  version: 0.0.0-use.local
+  resolution: "@superapp/ekyc-core@workspace:packages/ekyc-core"
+  languageName: unknown
+  linkType: soft
+
 "@superapp/shared-deps@workspace:*, @superapp/shared-deps@workspace:packages/shared-deps":
   version: 0.0.0-use.local
   resolution: "@superapp/shared-deps@workspace:packages/shared-deps"
@@ -4080,7 +4086,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "SuperAppShowcase@workspace:."
   dependencies:
-    "@react-native-masked-view/masked-view": "npm:^0.3.2"
     prettier: "npm:^3.0.0"
     turbo: "npm:2.7.5"
   languageName: unknown
@@ -7129,6 +7134,7 @@ __metadata:
     "@react-native-community/cli": "npm:20.1.0"
     "@react-native-community/cli-platform-android": "npm:20.1.0"
     "@react-native-community/cli-platform-ios": "npm:20.1.0"
+    "@react-native-masked-view/masked-view": "npm:^0.3.2"
     "@react-native/assets-registry": "npm:^0.86.2"
     "@react-native/babel-preset": "npm:0.86.0"
     "@react-native/eslint-config": "npm:0.86.0"
@@ -7139,6 +7145,7 @@ __metadata:
     "@react-navigation/native": "npm:^7.3.14"
     "@react-navigation/native-stack": "npm:^7.18.6"
     "@rspack/core": "npm:^1.7.8"
+    "@superapp/ekyc-core": "workspace:*"
     "@superapp/shared-deps": "workspace:*"
     "@superapp/shared-ui": "workspace:*"
     "@swc/helpers": "npm:^0.5.19"

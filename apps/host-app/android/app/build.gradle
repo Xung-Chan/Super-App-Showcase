@@ -109,6 +109,9 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+    androidResources {
+        noCompress += ["bic", "tflite", "onnx", "bin"]
+    }
 }
 
 dependencies {
