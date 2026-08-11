@@ -1,8 +1,7 @@
 import {
   startEkyc,
-  VerifyCccdInput,
   VerifyCccdResult,
-} from '@superapp/ekyc-core';
+} from '@xungchan/ekyc-core';
 import {
   Button,
   StatusBar,
