@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import com.facebook.react.bridge.ActivityEventListener
+import com.facebook.react.bridge.Arguments
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.vnptit.idg.sdk.activity.VnptIdentityActivity
@@ -53,12 +54,17 @@ class EkycCoreModule(reactContext: ReactApplicationContext) : NativeEkycCoreSpec
     if (requestCode != EKYC_REQUEST_CODE) return
 
     if (resultCode == Activity.RESULT_OK && data != null) {
-
-      val result = data.getStringExtra("EKYC_RESULT") // tùy SDK
+      val result = data.getStringExtra("EKYC_RESULT") ?: ""
       Log.d(NAME, "Result received: $result")
-      ekycPromise?.resolve(result)
 
+      val resultMap = Arguments.createMap().apply {
+        putString("message", result)
+      }
+      ekycPromise?.resolve(resultMap)
     } else {
+      val resultMap = Arguments.createMap().apply {
+        putString("message", "User cancelled or failed")
+      }
       ekycPromise?.reject("EKYC_FAILED", "User cancelled or failed")
     }
 

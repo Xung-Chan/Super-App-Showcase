@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import { RootStackParamList } from '../navigation/navigation-type';
-import NativeEkycCore from '@superapp/ekyc-core/src/NativeEkycCore';
+import { startEkyc } from '@superapp/ekyc-core';
 
 export function HomeScreen({
   navigation,
@@ -18,9 +18,13 @@ export function HomeScreen({
   const handleStartEkyc = async () => {
     try {
       console.log('Starting eKYC...');
-      const result = await NativeEkycCore.startEkyc();
-      console.log('eKYC result:', result);
-      Alert.alert('Success', `eKYC completed: ${result}`);
+
+      // const input: VerifyCccdInput = {
+      //   cccd: '0123456789',
+      // };
+      const result = await startEkyc();
+      console.log('eKYC result:', result.message);
+      Alert.alert('Success', `eKYC completed: ${result.message}`);
     } catch (error: any) {
       console.error('eKYC error:', error);
       Alert.alert(

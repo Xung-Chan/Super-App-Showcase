@@ -1,6 +1,7 @@
+import { VerifyCccdInput, VerifyCccdResult } from "./types/ekyc-type";
 import EkycCore from "./NativeEkycCore";
 
-export function startEkyc(): Promise<string> {
+export function startEkyc(): Promise<VerifyCccdResult> {
   return EkycCore.startEkyc();
 }
 

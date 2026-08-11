@@ -1,4 +1,8 @@
-import { startEkyc } from '@superapp/ekyc-core';
+import {
+  startEkyc,
+  VerifyCccdInput,
+  VerifyCccdResult,
+} from '@superapp/ekyc-core';
 import {
   Button,
   StatusBar,
@@ -21,8 +25,11 @@ function App() {
 
 function AppContent() {
   const handleStartEkyc = async () => {
-    const result = await startEkyc();
-    console.log(result);
+    // const input: VerifyCccdInput = {
+    //   cccd: '0123456789',
+    // };
+    const result: VerifyCccdResult = await startEkyc();
+    console.log(result.message);
   };
   return (
     <View style={styles.container}>
