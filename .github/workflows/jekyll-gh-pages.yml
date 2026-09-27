@@ -1,0 +1,55 @@
+# .github/workflows/deploy-gh-pages.yml
+name: Build and Deploy Mini App to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Cho phép trigger thủ công từ giao diện GitHub Actions
+
+# Cấp quyền ghi nội dung để đẩy code lên nhánh gh-pages
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout source code
+        uses: actions/checkout@v4
+
+      - name: 2. Setup Node.js (v20)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+
+      - name: 3. Enable Corepack & Setup Yarn Berry
+        run: |
+          corepack enable
+          corepack prepare yarn@4.11.0 --activate
+
+      - name: 4. Install Dependencies
+        run: yarn install --immutable
+
+      - name: 5. Build Mini App for Android & iOS
+        env:
+          NODE_ENV: production
+        run: |
+          # Di chuyển vào folder mini app (nếu là Monorepo) hoặc chạy trực tiếp
+          yarn workspace mini_app_a build:gh-pages
+
+      - name: 6. Đảm bảo file .nojekyll tồn tại
+        run: |
+          touch apps/mini-app-a/dist/.nojekyll
+
+      - name: 7. Deploy to GitHub Pages Branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./apps/mini-app-a/dist
+          publish_branch: gh-pages
+          force_orphan: true
+          commit_message: "Auto-deploy mini app bundle [skip ci]"
+
