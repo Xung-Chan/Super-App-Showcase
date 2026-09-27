@@ -5,12 +5,13 @@ import { Platform } from "react-native";
 import { LoadingScreen } from "../components/LoadingScreen";
 import { MiniAppErrorFallback } from "../components/MiniAppErrorFallback";
 import ErrorBoundary from "../components/ErrorBoundary";
-
+const GITHUB_REPO_NAME = 'mini-app-a';
+const GITHUB_USER_OR_ORG = 'xung-chan';
 const FederatedMiniAppA = React.lazy(async () => {
   const mini_app_a_port = 8082;
   const mini_app_a_url = __DEV__
     ? `http://localhost:${mini_app_a_port}/${Platform.OS}/mf-manifest.json`
-    : `https://your-cdn.example.com/mini_app_a/${Platform.OS}/mf-manifest.json`;
+    : `https://${GITHUB_USER_OR_ORG}.github.io/${GITHUB_REPO_NAME}/${Platform.OS}/mf-manifest.json`;
 
   registerRemotes([
     {

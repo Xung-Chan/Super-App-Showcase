@@ -1,0 +1,3 @@
+[submodule "apps/mini-app-a"]
+	path = apps/mini-app-a
+	url = https://github.com/Xung-Chan/super-app-a.git
