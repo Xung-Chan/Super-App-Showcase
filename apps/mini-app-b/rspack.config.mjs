@@ -13,18 +13,29 @@ const __dirname = path.dirname(__filename);
  * Learn about Re.Pack configuration: https://re-pack.dev/docs/guides/configuration
  */
 
-export default Repack.defineRspackConfig((env) => ({
-  context: __dirname,
-  entry: './index.js',
-  output: {
-    uniqueName: 'mini_app_b',
-  },
-  resolve: {
-    ...Repack.getResolveOptions(env.platform, {
-      enablePackageExports: true,
-      preferNativePlatform: true,
-    }),
-  },
+const GITHUB_REPO_NAME = 'Super-App-Showcase';
+const GITHUB_USER_OR_ORG = 'xung-chan';
+
+export default Repack.defineRspackConfig(env => {
+  const publicPath = env.dev
+    ? `http://localhost:8083/${env.platform}/`
+    : `https://${GITHUB_USER_OR_ORG}.github.io/${GITHUB_REPO_NAME}/mini_app_b/${env.platform}/`;
+
+  return {
+    context: __dirname,
+    entry: './index.js',
+    resolve: {
+      ...Repack.getResolveOptions(env.platform, {
+        enablePackageExports: true,
+        preferNativePlatform: true,
+      }),
+    },
+    output: {
+      uniqueName: 'mini_app_b',
+      clean: true,
+      path: path.resolve(__dirname, `dist/${env.platform}`),
+      publicPath,
+    },
   module: {
     rules: [
       {
@@ -52,4 +63,5 @@ export default Repack.defineRspackConfig((env) => ({
       shared: getSharedDependencies({ eager: false })
     }),
   ],
-}));
+};
+});

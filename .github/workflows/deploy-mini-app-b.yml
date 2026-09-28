@@ -1,0 +1,58 @@
+name: Build and Deploy Mini App B to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/mini-app-b/**'
+      - '.github/workflows/deploy-mini-app-b.yml'
+  workflow_dispatch: # Cho phép trigger thủ công từ giao diện GitHub Actions
+
+# Cấp quyền ghi nội dung để đẩy code lên nhánh gh-pages
+permissions:
+  contents: write
+
+# Tránh xung đột push khi các workflow cùng deploy lên 1 nhánh gh-pages
+concurrency:
+  group: github-pages-deploy
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout source code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: 2. Setup Node.js (v22)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 3. Enable Corepack & Setup Yarn Berry
+        run: |
+          corepack enable
+          corepack prepare yarn@4.18.0 --activate
+
+      - name: 4. Install Dependencies
+        run: yarn install --immutable
+
+      - name: 5. Build Mini App B for Android & iOS
+        env:
+          NODE_ENV: production
+        run: |
+          yarn workspace mini_app_b build:gh-pages
+
+      - name: 6. Deploy Mini App B to GitHub Pages Branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./apps/mini-app-b/dist
+          destination_dir: mini_app_b
+          publish_branch: gh-pages
+          keep_files: true
+          commit_message: "Auto-deploy mini_app_b bundle [skip ci]"

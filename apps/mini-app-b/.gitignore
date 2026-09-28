@@ -24,6 +24,7 @@ DerivedData
 
 # Android/IntelliJ
 #
+*.settings
 build/
 .idea
 .gradle

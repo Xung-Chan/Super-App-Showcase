@@ -9,11 +9,14 @@ import { LoadingScreen } from '../components/LoadingScreen';
 import { MiniAppErrorFallback } from '../components/MiniAppErrorFallback';
 import ErrorBoundary from '../components/ErrorBoundary';
 
+const GITHUB_REPO_NAME = 'Super-App-Showcase';
+const GITHUB_USER_OR_ORG = 'xung-chan';
+
 const FederatedMiniAppB = React.lazy(async () => {
   const mini_app_b_port = 8083;
   const mini_app_b_url = __DEV__
     ? `http://localhost:${mini_app_b_port}/${Platform.OS}/mf-manifest.json`
-    : `http://example.com`;
+    : `https://${GITHUB_USER_OR_ORG}.github.io/${GITHUB_REPO_NAME}/mini_app_b/${Platform.OS}/mf-manifest.json`;
 
   registerRemotes([
     {
