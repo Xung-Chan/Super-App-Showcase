@@ -47,12 +47,17 @@ jobs:
         run: |
           yarn workspace mini_app_a build:gh-pages
 
-      - name: 6. Deploy Mini App A to GitHub Pages Branch
+      - name: 6. Chuẩn bị cấu trúc thư mục deploy
+        run: |
+          mkdir -p ./deploy-dist/mini_app_a
+          cp -r ./apps/mini-app-a/dist/. ./deploy-dist/mini_app_a/
+          touch ./deploy-dist/.nojekyll
+
+      - name: 7. Deploy Mini App A to GitHub Pages Branch
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./apps/mini-app-a/dist
-          destination_dir: mini_app_a
+          publish_dir: ./deploy-dist
           publish_branch: gh-pages
           keep_files: true
           commit_message: "Auto-deploy mini_app_a bundle [skip ci]"

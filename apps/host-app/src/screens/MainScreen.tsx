@@ -34,7 +34,7 @@ export function HomeScreen({
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
 
       <View style={styles.container}>
-        <Text style={styles.title}>Host </Text>
+        <Text style={styles.title}>Host App</Text>
 
         <Button
           title="Open JSONPlaceholder Mini-App"

@@ -13,8 +13,9 @@ const GITHUB_REPO_NAME = 'Super-App-Showcase';
 const GITHUB_USER_OR_ORG = 'xung-chan';
 
 const FederatedMiniAppB = React.lazy(async () => {
+  const USE_REMOTE_CDN = true; // Bật cờ này để ép tải từ GitHub Pages ngay khi dev
   const mini_app_b_port = 8083;
-  const mini_app_b_url = __DEV__
+  const mini_app_b_url = __DEV__ && !USE_REMOTE_CDN
     ? `http://localhost:${mini_app_b_port}/${Platform.OS}/mf-manifest.json`
     : `https://${GITHUB_USER_OR_ORG}.github.io/${GITHUB_REPO_NAME}/mini_app_b/${Platform.OS}/mf-manifest.json`;
 
