@@ -1,0 +1,578 @@
+{
+  "id": "mini_app_a",
+  "name": "mini_app_a",
+  "metaData": {
+    "name": "mini_app_a",
+    "type": "app",
+    "buildInfo": {
+      "buildVersion": "0.0.1",
+      "buildName": "mini_app_a"
+    },
+    "remoteEntry": {
+      "name": "mini_app_a.container.bundle",
+      "path": "",
+      "type": "global"
+    },
+    "types": {
+      "path": "",
+      "name": "",
+      "zip": "",
+      "api": ""
+    },
+    "globalName": "mini_app_a",
+    "pluginVersion": "2.9.2",
+    "publicPath": "https://xung-chan.github.io/mini-app-a/android/"
+  },
+  "shared": [
+    {
+      "id": "mini_app_a:@react-native/assets-registry/path-support",
+      "requiredVersion": "^0.86.0",
+      "name": "@react-native/assets-registry/path-support",
+      "version": "0.86.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "node_modules_react-native_node_modules_react-native_assets-registry_path-support_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "id": "mini_app_a:@react-native/assets-registry/registry",
+      "requiredVersion": "^0.86.0",
+      "name": "@react-native/assets-registry/registry",
+      "version": "0.86.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "node_modules_react-native_node_modules_react-native_assets-registry_registry_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "id": "mini_app_a:@react-native/normalize-colors",
+      "requiredVersion": "^0.86.0",
+      "name": "@react-native/normalize-colors",
+      "version": "0.86.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "node_modules_react-native_node_modules_react-native_normalize-colors_index_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "id": "mini_app_a:@react-native/virtualized-lists",
+      "requiredVersion": "^0.86.0",
+      "name": "@react-native/virtualized-lists",
+      "version": "0.86.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "vendors-node_modules_react-native_virtualized-lists_index_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "singleton": true,
+      "requiredVersion": "7.18.6",
+      "shareScope": "default",
+      "eager": false,
+      "version": "7.18.6",
+      "name": "@react-navigation/native-stack",
+      "id": "mini_app_a:@react-navigation/native-stack",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "vendors-node_modules_react-navigation_native-stack_lib_module_index_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "singleton": true,
+      "requiredVersion": "7.3.14",
+      "shareScope": "default",
+      "eager": false,
+      "version": "7.3.14",
+      "name": "@react-navigation/native",
+      "id": "mini_app_a:@react-navigation/native",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "vendors-node_modules_react-navigation_native_lib_module_index_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "singleton": true,
+      "requiredVersion": "workspace:*",
+      "shareScope": "default",
+      "eager": false,
+      "version": "workspace:*",
+      "name": "@superapp/shared-ui",
+      "id": "mini_app_a:@superapp/shared-ui",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "packages_shared-ui_index_ts-_48af0.chunk.bundle",
+            "packages_shared-ui_index_ts-_48af1.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "singleton": true,
+      "requiredVersion": "5.8.0",
+      "shareScope": "default",
+      "eager": false,
+      "version": "5.8.0",
+      "name": "react-native-safe-area-context",
+      "id": "mini_app_a:react-native-safe-area-context",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "node_modules_react-native-safe-area-context_src_index_tsx-_e2ea0.chunk.bundle",
+            "node_modules_react-native-safe-area-context_src_index_tsx-_e2ea1.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "singleton": true,
+      "requiredVersion": "4.26.2",
+      "shareScope": "default",
+      "eager": false,
+      "version": "4.26.2",
+      "name": "react-native-screens",
+      "id": "mini_app_a:react-native-screens",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "vendors-node_modules_react-native-screens_src_index_tsx.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "id": "mini_app_a:react-native/Libraries/Components/View/ReactNativeStyleAttributes",
+      "requiredVersion": "^0.86.0",
+      "name": "react-native/Libraries/Components/View/ReactNativeStyleAttributes",
+      "version": "0.86.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "index.bundle",
+            "vendors-node_modules_react-native_Libraries_Components_View_ReactNativeStyleAttributes_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "id": "mini_app_a:react-native/Libraries/Image/AssetRegistry",
+      "requiredVersion": "^0.86.0",
+      "name": "react-native/Libraries/Image/AssetRegistry",
+      "version": "0.86.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "node_modules_react-native_Libraries_Image_AssetRegistry_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "id": "mini_app_a:react-native/Libraries/Image/AssetSourceResolver",
+      "requiredVersion": "^0.86.0",
+      "name": "react-native/Libraries/Image/AssetSourceResolver",
+      "version": "0.86.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "index.bundle",
+            "node_modules_react-native_Libraries_Image_AssetSourceResolver_js.chunk.bundle",
+            "vendors-node_modules_react-native_Libraries_Image_resolveAssetSource_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "id": "mini_app_a:react-native/Libraries/Image/resolveAssetSource",
+      "requiredVersion": "^0.86.0",
+      "name": "react-native/Libraries/Image/resolveAssetSource",
+      "version": "0.86.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "index.bundle",
+            "vendors-node_modules_react-native_Libraries_Image_resolveAssetSource_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "id": "mini_app_a:react-native/Libraries/NativeComponent/NativeComponentRegistry",
+      "requiredVersion": "^0.86.0",
+      "name": "react-native/Libraries/NativeComponent/NativeComponentRegistry",
+      "version": "0.86.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "index.bundle",
+            "vendors-node_modules_react-native_Libraries_NativeComponent_NativeComponentRegistry_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "id": "mini_app_a:react-native/Libraries/NativeComponent/ViewConfigIgnore",
+      "requiredVersion": "^0.86.0",
+      "name": "react-native/Libraries/NativeComponent/ViewConfigIgnore",
+      "version": "0.86.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "index.bundle",
+            "node_modules_invariant_browser_js-node_modules_react-native_Libraries_NativeComponent_ViewCon-c57f1d0.chunk.bundle",
+            "node_modules_invariant_browser_js-node_modules_react-native_Libraries_NativeComponent_ViewCon-c57f1d1.chunk.bundle",
+            "vendors-node_modules_react-native_Libraries_NativeComponent_NativeComponentRegistry_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "id": "mini_app_a:react-native/Libraries/ReactNative/AppContainer",
+      "requiredVersion": "^0.86.0",
+      "name": "react-native/Libraries/ReactNative/AppContainer",
+      "version": "0.86.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "index.bundle",
+            "node_modules_react-native_Libraries_ReactNative_AppContainer_js-_73190.chunk.bundle",
+            "node_modules_react-native_Libraries_ReactNative_AppContainer_js-_73191.chunk.bundle",
+            "vendors-node_modules_react-native_index_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "id": "mini_app_a:react-native/Libraries/ReactNative/RendererProxy",
+      "requiredVersion": "^0.86.0",
+      "name": "react-native/Libraries/ReactNative/RendererProxy",
+      "version": "0.86.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "index.bundle",
+            "vendors-node_modules_invariant_browser_js-node_modules_react-native_Libraries_ReactNative_Ren-2c5665.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "id": "mini_app_a:react-native/Libraries/ReactPrivate/ReactNativePrivateInitializeCore",
+      "requiredVersion": "^0.86.0",
+      "name": "react-native/Libraries/ReactPrivate/ReactNativePrivateInitializeCore",
+      "version": "0.86.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "node_modules_react-native_Libraries_ReactPrivate_ReactNativePrivateInitializeCore_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "id": "mini_app_a:react-native/Libraries/ReactPrivate/ReactNativePrivateInterface",
+      "requiredVersion": "^0.86.0",
+      "name": "react-native/Libraries/ReactPrivate/ReactNativePrivateInterface",
+      "version": "0.86.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "vendors-node_modules_react-native_Libraries_ReactPrivate_ReactNativePrivateInterface_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "id": "mini_app_a:react-native/Libraries/StyleSheet/processColorArray",
+      "requiredVersion": "^0.86.0",
+      "name": "react-native/Libraries/StyleSheet/processColorArray",
+      "version": "0.86.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "index.bundle",
+            "node_modules_invariant_browser_js-node_modules_react-native_Libraries_StyleSheet_processColor-e86ee6.chunk.bundle",
+            "vendors-node_modules_react-native_Libraries_NativeComponent_NativeComponentRegistry_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "id": "mini_app_a:react-native/src/private/featureflags/ReactNativeFeatureFlags",
+      "requiredVersion": "^0.86.0",
+      "name": "react-native/src/private/featureflags/ReactNativeFeatureFlags",
+      "version": "0.86.0",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "index.bundle",
+            "vendors-node_modules_react-native_src_private_featureflags_ReactNativeFeatureFlags_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "singleton": true,
+      "requiredVersion": "0.86.0",
+      "shareScope": "default",
+      "eager": false,
+      "version": "0.86.0",
+      "name": "react-native",
+      "id": "mini_app_a:react-native",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "vendors-node_modules_react-native_index_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    },
+    {
+      "singleton": true,
+      "requiredVersion": "19.2.3",
+      "shareScope": "default",
+      "eager": false,
+      "version": "19.2.3",
+      "name": "react",
+      "id": "mini_app_a:react",
+      "assets": {
+        "js": {
+          "async": [],
+          "sync": [
+            "node_modules_react_index_js.chunk.bundle"
+          ]
+        },
+        "css": {
+          "async": [],
+          "sync": []
+        }
+      },
+      "usedIn": [],
+      "usedExports": [],
+      "fallback": ""
+    }
+  ],
+  "remotes": [],
+  "exposes": [
+    {
+      "path": "./App",
+      "id": "mini_app_a:App",
+      "name": "App",
+      "requires": [],
+      "file": "App",
+      "assets": {
+        "js": {
+          "sync": [
+            "vendors-node_modules_react-native-vector-icons_MaterialCommunityIcons_js.chunk.bundle",
+            "vendors-node_modules_reduxjs_toolkit_dist_cjs_index_js-node_modules_axios_dist_browser_axios_-903369.chunk.bundle",
+            "__federation_expose_App.chunk.bundle"
+          ],
+          "async": [
+            "vendors-node_modules_react-native_Libraries_TurboModule_TurboModuleRegistry_js.chunk.bundle",
+            "node_modules_invariant_browser_js-node_modules_react-native_Libraries_Utilities_Platform_andr-4e8ade0.chunk.bundle",
+            "node_modules_invariant_browser_js-node_modules_react-native_Libraries_Utilities_Platform_andr-4e8ade2.chunk.bundle",
+            "node_modules_invariant_browser_js-node_modules_react-native_Libraries_Utilities_Platform_andr-4e8ade1.chunk.bundle"
+          ]
+        },
+        "css": {
+          "sync": [],
+          "async": []
+        }
+      }
+    }
+  ]
+}
