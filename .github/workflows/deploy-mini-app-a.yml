@@ -5,6 +5,7 @@ on:
     branches:
       - main
     paths:
+      - 'apps/mini-app-a'
       - 'apps/mini-app-a/**'
       - '.github/workflows/deploy-mini-app-a.yml'
   workflow_dispatch: # Cho phép trigger thủ công từ giao diện GitHub Actions
