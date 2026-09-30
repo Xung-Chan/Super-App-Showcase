@@ -403,7 +403,9 @@
           "sync": []
         }
       },
-      "usedIn": [],
+      "usedIn": [
+        "./App"
+      ],
       "usedExports": [],
       "fallback": ""
     }
@@ -416,6 +418,7 @@
       "name": "App",
       "requires": [
         "react-native",
+        "react",
         "react-native-safe-area-context"
       ],
       "file": "App",
