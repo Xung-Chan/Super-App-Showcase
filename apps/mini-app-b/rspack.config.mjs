@@ -20,9 +20,7 @@ export default Repack.defineRspackConfig(env => {
   const publicPath = env.dev
     ? 
     `http://localhost:8083/${env.platform}/`
-    :
-    `http://localhost:8083/${env.platform}/`
-    // : `https://${GITHUB_USER_OR_ORG}.github.io/${GITHUB_REPO_NAME}/mini_app_b/${env.platform}/`;
+    : `https://${GITHUB_USER_OR_ORG}.github.io/${GITHUB_REPO_NAME}/mini_app_b/${env.platform}/`;
 
   return {
     context: __dirname,
