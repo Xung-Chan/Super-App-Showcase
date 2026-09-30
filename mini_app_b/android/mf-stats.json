@@ -21,7 +21,7 @@
     },
     "globalName": "mini_app_b",
     "pluginVersion": "2.9.2",
-    "publicPath": "https://xung-chan.github.io/Super-App-Showcase/mini_app_b/android/"
+    "publicPath": "http://localhost:8083/android/"
   },
   "shared": [
     {
