@@ -37,16 +37,16 @@ export function HomeScreen({
         <Text style={styles.title}>Host App</Text>
 
         <Button
-          title="Open JSONPlaceholder Mini-App"
-          onPress={() => navigation.navigate('MiniAppA')}
+          title="Open  Mini-App A"
+          onPress={() => navigation.navigate('RemoteApp', { appKey: 'mini_a' })}
         />
         <Button
           title="Start eKYC Register on Host App"
           onPress={handleStartEkyc}
         />
         <Button
-          title="Open Theme Mini App"
-          onPress={() => navigation.navigate('MiniAppB')}
+          title="Open Theme Mini-App B"
+          onPress={() => navigation.navigate('RemoteApp', { appKey: 'mini_b' })}
         />
       </View>
     </>
