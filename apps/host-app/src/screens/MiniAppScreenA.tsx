@@ -11,7 +11,7 @@ import ErrorBoundary from '../components/ErrorBoundary';
 const GITHUB_REPO_NAME = 'Super-App-Showcase';
 const GITHUB_USER_OR_ORG = 'xung-chan';
 const FederatedMiniAppA = React.lazy(async () => {
-  const USE_REMOTE_CDN = true; // Bật cờ này để ép tải từ GitHub Pages ngay khi dev
+  const USE_REMOTE_CDN = false; // Bật cờ này để ép tải từ GitHub Pages ngay khi dev
 
   const mini_app_a_port = 8082;
   const mini_app_a_url =

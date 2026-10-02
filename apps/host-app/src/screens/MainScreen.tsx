@@ -45,7 +45,7 @@ export function HomeScreen({
           onPress={handleStartEkyc}
         />
         <Button
-          title="Open eKYC Mini App"
+          title="Open Theme Mini App"
           onPress={() => navigation.navigate('MiniAppB')}
         />
       </View>

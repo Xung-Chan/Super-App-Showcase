@@ -3494,6 +3494,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@superapp/share-deeplink@workspace:*, @superapp/share-deeplink@workspace:packages/share-deeplink":
+  version: 0.0.0-use.local
+  resolution: "@superapp/share-deeplink@workspace:packages/share-deeplink"
+  languageName: unknown
+  linkType: soft
+
 "@superapp/shared-deps@workspace:*, @superapp/shared-deps@workspace:packages/shared-deps":
   version: 0.0.0-use.local
   resolution: "@superapp/shared-deps@workspace:packages/shared-deps"
@@ -6769,6 +6775,7 @@ __metadata:
     "@react-navigation/native": "npm:^7.3.14"
     "@react-navigation/native-stack": "npm:^7.18.6"
     "@rspack/core": "npm:^1.7.8"
+    "@superapp/share-deeplink": "workspace:*"
     "@superapp/shared-deps": "workspace:*"
     "@superapp/shared-ui": "workspace:*"
     "@swc/helpers": "npm:^0.5.19"
@@ -8772,6 +8779,7 @@ __metadata:
     "@react-navigation/native-stack": "npm:^7.18.6"
     "@reduxjs/toolkit": "npm:^2.12.0"
     "@rspack/core": "npm:^1.7.8"
+    "@superapp/share-deeplink": "workspace:*"
     "@superapp/shared-deps": "workspace:*"
     "@superapp/shared-ui": "workspace:*"
     "@swc/helpers": "npm:^0.5.19"
