@@ -5,11 +5,12 @@ import { MiniAppScreenA } from '../screens/MiniAppScreenA';
 import { MiniAppScreenB } from '../screens/MiniAppScreenB';
 import { RootStackParamList } from './navigation-type';
 import { RemoteAppScreen } from '../screens/RemoteAppScreen';
+import { linkingConfig } from './deeplink/deeplinkHandler';
 
 export const AppNavigator = () => {
   const Stack = createNativeStackNavigator<RootStackParamList>();
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linkingConfig} fallback={undefined}>
       <Stack.Navigator>
         <Stack.Screen
           name="Home"
@@ -17,16 +18,6 @@ export const AppNavigator = () => {
           options={{ title: 'Host App' }}
         />
 
-        <Stack.Screen
-          name="MiniAppA"
-          component={MiniAppScreenA}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="MiniAppB"
-          component={MiniAppScreenB}
-          options={{ headerShown: false }}
-        />
         <Stack.Screen
           name="RemoteApp"
           component={RemoteAppScreen}

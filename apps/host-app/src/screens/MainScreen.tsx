@@ -2,6 +2,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
   Alert,
   Button,
+  Linking,
   StatusBar,
   StyleSheet,
   Text,
@@ -41,8 +42,12 @@ export function HomeScreen({
           onPress={() => navigation.navigate('RemoteApp', { appKey: 'mini_a' })}
         />
         <Button
-          title="Start eKYC Register on Host App"
-          onPress={handleStartEkyc}
+          title="Open  Mini-App A with deeplink"
+          onPress={() => Linking.openURL('superapp://remote-app/mini_a')}
+        />
+        <Button
+          title="Open Mini-App A Post 1 (Deeplink)"
+          onPress={() => Linking.openURL('superapp://remote-app/mini_a?path=/post/1')}
         />
         <Button
           title="Open Theme Mini-App B"

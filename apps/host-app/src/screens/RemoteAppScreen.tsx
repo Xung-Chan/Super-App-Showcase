@@ -12,7 +12,7 @@ type RemoteAppScreenNavigationProp = NativeStackNavigationProp<RootStackParamLis
 export const RemoteAppScreen = () => {
     const navigation = useNavigation<RemoteAppScreenNavigationProp>()
     const route = useRoute<RemoteAppScreenRouteProp>();
-    const { appKey } = route.params;
+    const { appKey,path } = route.params;
     const remoteConfig = REMOTE_APPS[appKey];
-    return <WrapperRSPack remoteConfig={remoteConfig} />
+    return <WrapperRSPack remoteConfig={remoteConfig} initialRoute={path}/>
 }

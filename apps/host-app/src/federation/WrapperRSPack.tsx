@@ -15,7 +15,7 @@ const GITHUB_USER_OR_ORG = 'xung-chan';
 export interface IProp {
   moduleExpose?: string;
   remoteConfig: RemoteAppConfig;
-  props?: Record<string, any>;
+  initialRoute?: string;
 }
 
 // Cache dynamic React.lazy component theo remoteName + moduleExpose
@@ -62,7 +62,7 @@ function getOrCreateFederatedComponent(
 export const WrapperRSPack = ({
   moduleExpose = 'App',
   remoteConfig,
-  props,
+  initialRoute,
 }: IProp) => {
   if (!remoteConfig) {
     return <MiniAppErrorFallback />;
@@ -82,7 +82,7 @@ export const WrapperRSPack = ({
       }}
     >
       <React.Suspense fallback={<LoadingScreen />}>
-        <FederatedComponent {...props} />
+        <FederatedComponent initialRoute={initialRoute} />
       </React.Suspense>
     </ErrorBoundary>
   );
