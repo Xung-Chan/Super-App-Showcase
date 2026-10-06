@@ -14,5 +14,11 @@ export const RemoteAppScreen = () => {
     const route = useRoute<RemoteAppScreenRouteProp>();
     const { appKey,path } = route.params;
     const remoteConfig = REMOTE_APPS[appKey];
-    return <WrapperRSPack remoteConfig={remoteConfig} initialRoute={path}/>
+    return (
+        <WrapperRSPack
+            remoteConfig={remoteConfig}
+            initialRoute={path}
+            onExitMiniApp={() => navigation.goBack()}
+        />
+    )
 }

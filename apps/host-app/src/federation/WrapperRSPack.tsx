@@ -16,6 +16,7 @@ export interface IProp {
   moduleExpose?: string;
   remoteConfig: RemoteAppConfig;
   initialRoute?: string;
+  onExitMiniApp?: () => void;
 }
 
 // Cache dynamic React.lazy component theo remoteName + moduleExpose
@@ -63,6 +64,7 @@ export const WrapperRSPack = ({
   moduleExpose = 'App',
   remoteConfig,
   initialRoute,
+  onExitMiniApp,
 }: IProp) => {
   if (!remoteConfig) {
     return <MiniAppErrorFallback />;
@@ -82,7 +84,10 @@ export const WrapperRSPack = ({
       }}
     >
       <React.Suspense fallback={<LoadingScreen />}>
-        <FederatedComponent initialRoute={initialRoute} />
+        <FederatedComponent
+          initialRoute={initialRoute}
+          onExitMiniApp={onExitMiniApp}
+        />
       </React.Suspense>
     </ErrorBoundary>
   );
