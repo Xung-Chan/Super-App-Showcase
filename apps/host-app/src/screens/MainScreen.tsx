@@ -10,11 +10,13 @@ import {
   View,
 } from 'react-native';
 import { RootStackParamList } from '../navigation/navigation-type';
+import { IS_PRODUCTION_BUILD } from '../constants/remoteAppList';
 
 export function HomeScreen({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'Home'>) {
   const isDarkMode = useColorScheme() === 'dark';
+  console.log("IS_PRODUCTION_BUILD",IS_PRODUCTION_BUILD)
   const handleStartEkyc = async () => {
     try {
       console.log('Starting eKYC...');
@@ -36,6 +38,7 @@ export function HomeScreen({
 
       <View style={styles.container}>
         <Text style={styles.title}>Host App</Text>
+        <Text style={styles.title}>TEST ENV: {IS_PRODUCTION_BUILD}</Text>
 
         <Button
           title="Open  Mini-App A"

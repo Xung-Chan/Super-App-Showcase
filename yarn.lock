@@ -6789,6 +6789,7 @@ __metadata:
     react: "npm:19.2.3"
     react-error-boundary: "npm:^6.1.2"
     react-native: "npm:0.86.0"
+    react-native-config: "npm:1.5.3"
     react-native-safe-area-context: "npm:^5.8.0"
     react-native-screens: "npm:^4.26.2"
     react-native-vector-icons: "npm:^10.3.0"
@@ -9765,6 +9766,18 @@ __metadata:
   version: 19.3.0
   resolution: "react-is@npm:19.3.0"
   checksum: 10c0/99b16fc1009222ec0bbe05286566c865908430778ea6ba90dd418c7a11594c6cbb8db58432735b9203e3c6463e3eef5a399df1317ee2d75fd96b3a88cfaa662e
+  languageName: node
+  linkType: hard
+
+"react-native-config@npm:1.5.3":
+  version: 1.5.3
+  resolution: "react-native-config@npm:1.5.3"
+  peerDependencies:
+    react-native-windows: ">=0.61"
+  peerDependenciesMeta:
+    react-native-windows:
+      optional: true
+  checksum: 10c0/98e4659191881a72bf756efa469debe90b84ba5f366489dbdebabd45b4f9ec5b05f116db5bdf181c5c688b759c5bc60365b675ff7446b10216056cef15b5ce3b
   languageName: node
   linkType: hard
 

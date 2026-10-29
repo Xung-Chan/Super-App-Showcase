@@ -1,6 +1,17 @@
+// 1. Khai báo map giữa Flavor và File Env
+project.ext.envConfigFiles = [
+    sit       : ".env.sit",
+    uat       : ".env.uat",
+    production: ".env.production"
+]
+// File mặc định dự phòng khi chạy các task chung (clean, tasks, codegen,...)
+project.ext.defaultEnvFile = ".env.sit"
+
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
+
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 /**
  * This is the configuration block to customize your React Native Android app.
@@ -22,6 +33,7 @@ react {
     //   skip the bundling of the JS bundle and the assets. Default is "debug", "debugOptimized".
     //   If you add flavors like lite, prod, etc. you'll have to list your debuggableVariants.
     // debuggableVariants = ["liteDebug", "liteDebugOptimized", "prodDebug", "prodDebugOptimized"]
+    debuggableVariants = ["sitDebug"]
 
     /* Bundling */
     //   A list containing the node command and its flags. Default is just 'node'.
@@ -88,6 +100,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        resValue "string", "build_config_package", "com.host_app"
     }
     signingConfigs {
         debug {
@@ -96,7 +109,34 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+        release {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
     }
+    flavorDimensions "env"
+    productFlavors {
+        sit {
+            dimension "env"
+            applicationIdSuffix ".sit"
+            signingConfig signingConfigs.debug
+            resValue "string", "app_name", "[SIT] Host App"
+        }
+        uat {
+            dimension "env"
+            applicationIdSuffix ".uat"
+            signingConfig signingConfigs.release
+            resValue "string", "app_name", "[UAT] Host App"
+        }
+        production{
+            signingConfig signingConfigs.release
+            resValue "string", "app_name", "Host App"
+
+        }
+    }
+
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
@@ -104,7 +144,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
