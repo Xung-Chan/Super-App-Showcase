@@ -16,30 +16,40 @@ export function HomeScreen({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'Home'>) {
   const isDarkMode = useColorScheme() === 'dark';
-  console.log("IS_PRODUCTION_BUILD",IS_PRODUCTION_BUILD)
-  const handleStartEkyc = async () => {
+  console.log("IS_PRODUCTION_BUILD", IS_PRODUCTION_BUILD)
+  const addressText = 'Đường Số 6/14 Đ. Phạm Hùng, Khu, Chánh Hưng, Hồ Chí Minh, Việt Nam'
+  const encodedAddress = encodeURIComponent(addressText);
+  
+  // URL điều hướng chuẩn của Google Maps
+  // travelmode có thể là: driving (lái xe), walking, bicycling, transit
+  const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}&travelmode=driving`;
+  console.log("encodedAddress",encodedAddress)
+  console.log("googleMapsUrl",googleMapsUrl)
+  const openMap = async () => {
     try {
-      console.log('Starting eKYC...');
-
-      // const input: VerifyCccdInput = {
-      //   cccd: '0123456789',
-      // };
-    } catch (error: any) {
-      console.error('eKYC error:', error);
-      Alert.alert(
-        'Error',
-        error.message || 'Failed to start eKYC. Please try again.',
-      );
+      const supported = await Linking.canOpenURL(googleMapsUrl);
+      if (supported) {
+        await Linking.openURL(googleMapsUrl);
+      } else {
+        Alert.alert('Lỗi', 'Không thể mở bản đồ trên thiết bị này.');
+      }
+    } catch (error) {
+      console.error('Lỗi khi mở Google Maps:', error);
+      Alert.alert('Lỗi', 'Đã có lỗi xảy ra khi mở ứng dụng bản đồ.');
     }
-  };
+  }
+
   return (
     <>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
 
       <View style={styles.container}>
         <Text style={styles.title}>Host App</Text>
-        <Text style={styles.title}>TEST ENV: {IS_PRODUCTION_BUILD}</Text>
 
+        <Button
+          title='open map'
+          onPress={openMap}
+        />
         <Button
           title="Open  Mini-App A"
           onPress={() => navigation.navigate('RemoteApp', { appKey: 'mini_a' })}
