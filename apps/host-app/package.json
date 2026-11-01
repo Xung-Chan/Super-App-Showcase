@@ -6,10 +6,11 @@
     "android": "react-native run-android --no-packager",
     "ios": "react-native run-ios",
     "lint": "eslint .",
-    "start": "react-native webpack-start --port 8081 --config rspack.config.mjs --reset-cache",
-    "android:sit": "react-native run-android --no-packager --mode=sitDebug",
-    "android:uat": "react-native run-android --no-packager --mode=uatRelease",
+    "start": "react-native webpack-start --port 8000 --config rspack.config.mjs --reset-cache",
+    "android:sit": "react-native run-android --no-packager --mode=sitDebug --appIdSuffix=sit",
+    "android:uat": "react-native run-android --no-packager --mode=uatDebug --appIdSuffix=uat",
     "build:android:sit": "cd android && ./gradlew assembleSitRelease",
+    "build:android:uat": "cd android && ./gradlew assembleUatRelease",
     "test": "jest"
   },
   "dependencies": {

@@ -8,9 +8,9 @@ import { RemoteAppConfig } from '../constants/remoteAppList';
 import ErrorBoundary from '../components/ErrorBoundary';
 import { MiniAppErrorFallback } from '../components/MiniAppErrorFallback';
 import { LoadingScreen } from '../components/LoadingScreen';
+import Config from 'react-native-config';
 
-const GITHUB_REPO_NAME = 'Super-App-Showcase';
-const GITHUB_USER_OR_ORG = 'xung-chan';
+const REMOTE_CDN_URL = Config.REMOTE_CDN_URL
 
 export interface IProp {
   moduleExpose?: string;
@@ -34,11 +34,9 @@ function getOrCreateFederatedComponent(
 
   if (!federatedComponentCache.has(cacheKey)) {
     const Component = React.lazy(async () => {
-      const useRemoteCDN = remoteConfig.useRemoteCDN ?? false;
-      const remoteUrl =
-        __DEV__ && !useRemoteCDN
-          ? `http://localhost:${remoteConfig.port}/${Platform.OS}/mf-manifest.json`
-          : `https://${GITHUB_USER_OR_ORG}.github.io/${GITHUB_REPO_NAME}/${remoteConfig.name}/${Platform.OS}/mf-manifest.json`;
+      const useDevelopMode = remoteConfig.isUseDevelopMode ?? true;
+      const remoteUrl =useDevelopMode ? `http://localhost:${remoteConfig.port}/${Platform.OS}/mf-manifest.json`
+          : `${REMOTE_CDN_URL}/${remoteConfig.name}/${Platform.OS}/mf-manifest.json`;
 
       console.log(`[WrapperRSPack] Register remote '${remoteConfig.name}' from:`, remoteUrl);
 
@@ -69,7 +67,6 @@ export const WrapperRSPack = ({
   if (!remoteConfig) {
     return <MiniAppErrorFallback />;
   }
-
   const FederatedComponent = React.useMemo(
     () => getOrCreateFederatedComponent(remoteConfig, moduleExpose),
     [remoteConfig, moduleExpose]

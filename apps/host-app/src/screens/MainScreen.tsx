@@ -10,13 +10,12 @@ import {
   View,
 } from 'react-native';
 import { RootStackParamList } from '../navigation/navigation-type';
-import { IS_PRODUCTION_BUILD } from '../constants/remoteAppList';
+import Config from 'react-native-config';
 
 export function HomeScreen({
   navigation,
 }: NativeStackScreenProps<RootStackParamList, 'Home'>) {
   const isDarkMode = useColorScheme() === 'dark';
-  console.log("IS_PRODUCTION_BUILD", IS_PRODUCTION_BUILD)
   const addressText = 'Đường Số 6/14 Đ. Phạm Hùng, Khu, Chánh Hưng, Hồ Chí Minh, Việt Nam'
   const encodedAddress = encodeURIComponent(addressText);
   
@@ -44,7 +43,8 @@ export function HomeScreen({
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
 
       <View style={styles.container}>
-        <Text style={styles.title}>Host App</Text>
+        <Text style={styles .title}>Host App</Text>
+        <Text style={styles .title}>{Config.DB_URL}</Text>
 
         <Button
           title='open map'
