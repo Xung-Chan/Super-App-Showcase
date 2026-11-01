@@ -12,6 +12,9 @@ concurrency:
   group: build-host-app-sit
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   build-and-distribute-sit:
     name: Build sitRelease APK & Upload to Firebase
