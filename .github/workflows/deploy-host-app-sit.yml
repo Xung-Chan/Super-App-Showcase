@@ -1,0 +1,102 @@
+name: Build and Distribute Host App (SIT Release) to Firebase
+
+on:
+  # Chạy khi Merge Pull Request (hoặc push) vào nhánh build/sit
+  push:
+    branches:
+      - build/sit
+  # Cho phép chạy thủ công trên giao diện GitHub Actions
+  workflow_dispatch:
+
+concurrency:
+  group: build-host-app-sit
+  cancel-in-progress: true
+
+jobs:
+  build-and-distribute-sit:
+    name: Build sitRelease APK & Upload to Firebase
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. Checkout source code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: 2. Setup Node.js (v22)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 3. Enable Corepack & Setup Yarn Berry
+        run: |
+          corepack enable
+          corepack prepare yarn@4.18.0 --activate
+
+      - name: 4. Cache Yarn dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            .yarn/cache
+            node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: 5. Install Dependencies
+        run: yarn install --immutable
+
+      - name: 6. Setup Java JDK 17 (Required by React Native 0.86)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: 7. Setup Gradle Cache
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: 8. Tạo file cấu hình môi trường (.env.sit)
+        working-directory: apps/host-app
+        run: |
+          if [ -n "${{ secrets.ENV_SIT }}" ]; then
+            echo "${{ secrets.ENV_SIT }}" > .env.sit
+          elif [ -f ".env.sit.example" ]; then
+            cp .env.sit.example .env.sit
+          else
+            echo "DB_URL=sit.com" > .env.sit
+            echo "REMOTE_CDN_URL=https://xung-chan.github.io/Super-App-Showcase" >> .env.sit
+          fi
+
+      - name: 9. Build Android APK (sitRelease)
+        working-directory: apps/host-app/android
+        env:
+          ENVFILE: .env.sit
+          NODE_ENV: production
+        run: |
+          chmod +x ./gradlew
+          # Ghi đè org.gradle.java.home (tránh lỗi đường dẫn D:\... của Windows trên máy ảo Ubuntu)
+          ./gradlew assembleSitRelease -Dorg.gradle.java.home="$JAVA_HOME"
+
+      - name: 10. Upload APK artifact lên GitHub Actions (Dự phòng)
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-sit-release-apk
+          path: apps/host-app/android/app/build/outputs/apk/sit/release/app-sit-release.apk
+          retention-days: 7
+
+      - name: 11. Upload APK lên Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_ANDROID_APP_ID_SIT }}
+          # Cách 1: Dùng Firebase CI Token (lấy bằng lệnh: npx firebase-tools login:ci)
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          # Cách 2 (Khuyến nghị mới của Google): Dùng nội dung JSON Service Account thay cho token
+          # serviceCredentialsFileContent: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_JSON }}
+          groups: ${{ vars.FIREBASE_TESTER_GROUPS || 'testers' }}
+          file: apps/host-app/android/app/build/outputs/apk/sit/release/app-sit-release.apk
+          releaseNotes: |
+            Build SIT Release từ nhánh ${{ github.ref_name }}
+            Commit: ${{ github.sha }}
+            Message: ${{ github.event.head_commit.message }}
+            Triggered by: ${{ github.actor }}
+
